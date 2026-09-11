@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/master-asset.css">
   <link rel="stylesheet" href="css/editorial.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/palette.css">
   <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -22,7 +23,11 @@
   </header>
   <nav class="section-nav" aria-label="섹션 탐색"><ol id="section-nav-list"></ol></nav>
   <main class="portfolio" id="portfolio">
-    <section class="portfolio-section cover is-dark composition composition--cover" id="cover" data-label="Cover" data-asset-src="./assets/images/common/cover-hero.webp">
+    <section class="portfolio-section cover is-dark composition composition--cover" id="cover" data-label="Cover" data-asset-src="./assets/images/key-visual/cover-kv.webp">
+      <figure class="hero-asset cover-asset" data-hero-asset data-desktop-src="./assets/images/key-visual/cover-kv.webp" data-mobile-src="./assets/images/key-visual/cover-kv-mobile.webp" hidden>
+        <img alt="Care in Focus campaign cover" width="1920" height="1080">
+        <figcaption class="cover-asset-meta"><span>WOORIEN · Marketing Content Design</span><span>Personal Project · Unofficial Concept Proposal</span></figcaption>
+      </figure>
       <div class="section-inner cover-grid">
         <div class="cover-copy reveal">
           <p class="eyebrow">01 · Marketing Content Design</p>
@@ -63,8 +68,10 @@
     </section>
 
     <section class="portfolio-section kv-section composition composition--full-bleed" id="key-visual" data-label="Key Visual" data-asset-src="./assets/images/key-visual/master-kv.webp">
-      <figure class="kv-master-asset" data-kv-master data-desktop-src="./assets/images/key-visual/master-kv.webp" data-mobile-src="./assets/images/key-visual/master-kv-mobile.webp" hidden>
+      <button class="study-toggle" type="button" data-toggle-studies hidden>View A/B/C studies</button>
+      <figure class="hero-asset kv-master-asset" data-hero-asset data-desktop-src="./assets/images/key-visual/master-kv.webp" data-mobile-src="./assets/images/key-visual/master-kv-mobile.webp" hidden>
         <img alt="Care in Focus Master Key Visual" width="1920" height="1080">
+        <figcaption class="master-asset-caption"><span>Care in Focus · Master Key Visual</span><span>Campaign Identity / Art Direction</span></figcaption>
       </figure>
       <div class="kv-lab">
         <div class="kv-lab-head reveal"><p class="eyebrow">05 · Master Key Visual Study</p><div class="kv-tabs" role="tablist" aria-label="키 비주얼 시안 비교"><button id="kv-tab-a" role="tab" aria-selected="true" aria-controls="kv-a" data-kv="a"><b>A</b><span>Flow Focus</span></button><button id="kv-tab-b" role="tab" aria-selected="false" aria-controls="kv-b" tabindex="-1" data-kv="b"><b>B</b><span>Human Focus</span></button><button id="kv-tab-c" role="tab" aria-selected="false" aria-controls="kv-c" tabindex="-1" data-kv="c"><b>C</b><span>Signal Focus</span></button></div></div>

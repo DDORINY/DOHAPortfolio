@@ -1,0 +1,56 @@
+/* Editorial palette. Legacy token aliases remain in variables.css for structural compatibility. */
+html,body{background:var(--ivory);color:var(--ink)}
+.portfolio-section{background:var(--off-white)}
+.is-ivory{background:var(--ivory)}
+.is-dark{background:var(--ink-deep)}
+.is-navy{background:var(--ink)}
+.cover{background:var(--ink-deep)}
+.eyebrow,.section-heading h2 em,.statement em,.end-copy em,.cover-copy h1 em,.scroll-cue,.record-card small,.section-nav a.active{color:var(--olive)}
+.skip-link,.snapshot-grid .accent-card,.workflow article.active,.phone-frame>div,.leaflet,.result-grid i:nth-child(2),.result-grid i:nth-child(6){background:var(--olive)}
+.section-nav a{color:var(--warm-gray)}
+.wave i,.data-wave i,.mini-wave,.mail-top,.flow-machine circle{background:var(--olive)}
+.flow-line{background:linear-gradient(90deg,var(--olive),var(--sage))}
+.record-card{border-color:rgba(250,248,242,.34);background:rgba(250,248,242,.07)}
+.focus-orbit{border-color:rgba(111,118,81,.56)}
+.focus-orbit::before,.focus-orbit::after{border-color:rgba(187,195,172,.24)}
+.snapshot-grid article,.system-board>div{background:var(--ivory)}
+.eco-core,.newsletter-frame button,.x-banner,.browser-content,.stage-screen{background:var(--ink)}
+.eco-item,.newsletter-frame,.catalog{background:var(--off-white)}
+.seminar{background:var(--sand)}
+.stage-floor{background:linear-gradient(var(--sand),var(--warm-gray))}
+.social-card{background:var(--ivory)}
+.social-card.main{background:var(--ink)}
+.social-card:nth-child(4){background:var(--olive)}
+.result-grid i:nth-child(3),.result-grid i:nth-child(4){background:var(--sage)}
+.device{background:linear-gradient(135deg,rgba(250,248,242,.09),rgba(111,118,81,.14))}
+.kv-section{background:var(--sand)}
+.kv-tabs{border-color:rgba(37,37,31,.16);background:rgba(250,248,242,.7)}
+.kv-tabs button[aria-selected="true"]{background:var(--ink)}
+.kv-stage{box-shadow:0 30px 80px rgba(24,25,20,.18)}
+.kv-a{background-color:var(--ink-deep);background-image:linear-gradient(rgba(187,195,172,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(187,195,172,.06) 1px,transparent 1px)}
+.flow-machine path{stroke:var(--olive)}
+.data-card{border-color:rgba(250,248,242,.32);background:rgba(250,248,242,.08)}
+.data-card small{color:var(--sage)}
+.focus-frame{border-color:rgba(111,118,81,.72)}
+.focus-frame::before,.focus-frame::after{border-color:rgba(187,195,172,.24)}
+.focus-frame i{background:linear-gradient(90deg,transparent,var(--olive),transparent)}
+.kv-b{background:var(--ivory);color:var(--ink)}
+.care-moment{background:linear-gradient(145deg,var(--sand),var(--sage))}
+.care-head,.care-body{background:var(--ink)}
+.patient{background:var(--ivory)}
+.patient::before,.patient::after{background:var(--ivory)}
+.quiet-data{background:rgba(250,248,242,.86)}
+.quiet-data i{background:rgba(37,37,31,.22)}
+.kv-c{background:var(--ink)}
+.signal-field{background:radial-gradient(circle at 72% 50%,rgba(111,118,81,.2),transparent 35%)}
+.signal-lines{background:repeating-radial-gradient(ellipse at 76% 50%,transparent 0 28px,rgba(111,118,81,.3) 29px 30px,transparent 31px 48px)}
+.signal-axis{background:linear-gradient(90deg,transparent,var(--olive) 35%,var(--olive) 80%,transparent)}
+.signal-ring{border-color:var(--olive)}
+.signal-ring.r2{border-color:rgba(187,195,172,.28)}
+.signal-core{background:var(--olive);color:var(--off-white);box-shadow:0 0 0 1.3rem rgba(111,118,81,.1)}
+.signal-field p{color:var(--sage)}
+.hero-asset{background:var(--ink-deep)}
+.composition{--rule:rgba(37,37,31,.24)}
+.composition.is-dark,.composition.is-navy{--rule:rgba(250,248,242,.2)}
+.composition--image-stack .social-card{box-shadow:0 12px 35px rgba(37,37,31,.08)}
+.study-toggle:focus-visible,.kv-tabs button:focus-visible{outline-color:var(--olive)}

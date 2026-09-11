@@ -60,44 +60,47 @@ kvTabs.forEach((tab, index) => {
   });
 });
 
-const masterAsset = document.querySelector('[data-kv-master]');
+const mobileAssetQuery = window.matchMedia('(max-width: 720px)');
 
-if (masterAsset) {
-  const masterImage = masterAsset.querySelector('img');
-  const mobileQuery = window.matchMedia('(max-width: 720px)');
+document.querySelectorAll('[data-hero-asset]').forEach((asset) => {
+  const section = asset.closest('.portfolio-section');
+  const image = asset.querySelector('img');
   let loadVersion = 0;
 
-  function loadMasterAsset() {
+  function loadHeroAsset() {
     const version = ++loadVersion;
-    const desktopSource = masterAsset.dataset.desktopSrc;
-    const preferredSource = mobileQuery.matches
-      ? masterAsset.dataset.mobileSrc
-      : desktopSource;
-    const sources = preferredSource === desktopSource
-      ? [desktopSource]
-      : [preferredSource, desktopSource];
+    const desktopSource = asset.dataset.desktopSrc;
+    const preferredSource = mobileAssetQuery.matches ? asset.dataset.mobileSrc : desktopSource;
+    const sources = preferredSource === desktopSource ? [desktopSource] : [preferredSource, desktopSource];
 
     function trySource(index) {
       if (version !== loadVersion || index >= sources.length) {
-        masterAsset.hidden = true;
-        masterAsset.closest('.kv-section')?.classList.remove('has-master-asset');
+        asset.hidden = true;
+        section?.classList.remove('has-hero-asset');
         return;
       }
-
       const probe = new Image();
       probe.onload = () => {
         if (version !== loadVersion) return;
-        masterImage.src = sources[index];
-        masterAsset.hidden = false;
-        masterAsset.closest('.kv-section')?.classList.add('has-master-asset');
+        image.src = sources[index];
+        asset.hidden = false;
+        section?.classList.add('has-hero-asset');
+        section?.querySelector('[data-toggle-studies]')?.removeAttribute('hidden');
       };
       probe.onerror = () => trySource(index + 1);
       probe.src = sources[index];
     }
-
     trySource(0);
   }
 
-  loadMasterAsset();
-  mobileQuery.addEventListener?.('change', loadMasterAsset);
-}
+  loadHeroAsset();
+  mobileAssetQuery.addEventListener?.('change', loadHeroAsset);
+});
+
+const kvSection = document.querySelector('.kv-section');
+const studiesToggle = document.querySelector('[data-toggle-studies]');
+
+studiesToggle?.addEventListener('click', () => {
+  const showingStudies = kvSection?.classList.toggle('show-kv-studies');
+  studiesToggle.textContent = showingStudies ? 'View master asset' : 'View A/B/C studies';
+});
