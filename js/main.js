@@ -59,3 +59,45 @@ kvTabs.forEach((tab, index) => {
     selectKeyVisual(kvTabs[nextIndex].dataset.kv, true);
   });
 });
+
+const masterAsset = document.querySelector('[data-kv-master]');
+
+if (masterAsset) {
+  const masterImage = masterAsset.querySelector('img');
+  const mobileQuery = window.matchMedia('(max-width: 720px)');
+  let loadVersion = 0;
+
+  function loadMasterAsset() {
+    const version = ++loadVersion;
+    const desktopSource = masterAsset.dataset.desktopSrc;
+    const preferredSource = mobileQuery.matches
+      ? masterAsset.dataset.mobileSrc
+      : desktopSource;
+    const sources = preferredSource === desktopSource
+      ? [desktopSource]
+      : [preferredSource, desktopSource];
+
+    function trySource(index) {
+      if (version !== loadVersion || index >= sources.length) {
+        masterAsset.hidden = true;
+        masterAsset.closest('.kv-section')?.classList.remove('has-master-asset');
+        return;
+      }
+
+      const probe = new Image();
+      probe.onload = () => {
+        if (version !== loadVersion) return;
+        masterImage.src = sources[index];
+        masterAsset.hidden = false;
+        masterAsset.closest('.kv-section')?.classList.add('has-master-asset');
+      };
+      probe.onerror = () => trySource(index + 1);
+      probe.src = sources[index];
+    }
+
+    trySource(0);
+  }
+
+  loadMasterAsset();
+  mobileQuery.addEventListener?.('change', loadMasterAsset);
+}
