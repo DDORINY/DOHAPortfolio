@@ -18,3 +18,12 @@
 | 12 Responsive | `assets/images/web/responsive-overview.webp` |
 | 13 AI Workflow | `assets/images/common/ai-workflow.webp` |
 | 14 Result | `assets/images/common/result-mosaic.webp` |
+
+## Meta
+
+| Asset | Web path | Source folder |
+| --- | --- | --- |
+| Favicon | `assets/meta/favicon.ico` | `design/meta/favicon/` |
+| Favicon 32 | `assets/meta/favicon-32x32.png` | `design/meta/favicon/` |
+| Apple Touch Icon | `assets/meta/apple-touch-icon.png` | `design/meta/favicon/` |
+| Open Graph | `assets/meta/og-image.jpg` | `design/meta/og-image/` |
