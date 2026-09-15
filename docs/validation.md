@@ -315,3 +315,30 @@ No commit, push, reset, clean, checkout, rename or deploy performed.
 - Modified index.html, validate-foundation.cjs, docs/project-plan.md, design/ASSET-MAP.md and this log.
 - Added css/ai-creative.css and docs/ai-creative-case.md. Deleted no files.
 - No commit, push, reset, checkout, clean, repository rename or deploy.
+## Final Density & Visual Layout Pass (2026-09-15)
+- START HEAD fb614c567752d72401de5debbfe0b73ad554be16; branch main; starting status clean.
+- All visible copy tokens and all img/source/audio tags preserved; every asset hash unchanged.
+- Cover/About/Experience/OFFBEAT/Process/Toolkit/Contact markup unchanged.
+- MORU Master and existing information grouped horizontally; Hero retains full width.
+- Detail max-width 1000→780px, original ratio and full image retained.
+- Desktop banner followed by Mobile/Story pair and Social trio; mobile remains one column.
+- AI Initial/Revision paired above 1024px, one column on tablet/mobile, then Direction and full-size Final.
+- Process compact grid, Toolkit four/two columns, Contact compact end section; min-height 0 for 06–12.
+- Snap disabled only for 06–12; previous Cover/About/Experience/OFFBEAT styling retained.
+- Compact Contact required a minimal bottom-of-document active-navigation correction in main.js.
+- Height comparison at 1440×900, same browser/file URL and all explicit image dimensions:
+  MORU 9470→6747px (-28.8%); AI 5771→3808px (-34.0%).
+  Process 900→470px (-47.8%); Toolkit 900→572px (-36.4%); Contact 900→705px (-21.7%).
+  Total sections 25700→20061px (-21.9%).
+- These are measured heights, not a claim that each approximate target was met.
+- At 390×900, MORU 6293→5809px (-7.7%), AI 4516→4039px (-10.6%):
+  mobile image width/readability take priority over desktop compression targets.
+- Six-width Chromium regression 1920/1440/1024/768/390/320: PASS.
+- Grid columns, Final larger than comparison images, compact min-height, 12 nav IDs/labels/active states: PASS.
+- No overflow, image/text clipping, navigation overlap, failed requests or console/runtime errors.
+- Image decode/ratio/alt, OFFBEAT/MORU/AI counts and audio keyboard play/pause: PASS.
+- Keyboard/focus/ARIA/skip link, reduced-motion, normal-motion deep links and JS-disabled content: PASS.
+- Desktop AI comparison screenshot inspected. No full screen-reader/cross-browser audit.
+- Existing lazy/async/dimension attributes retained; no new content, imagery, dependency or animation.
+- Modified index.html, js/main.js, validate-foundation.cjs and this log; added css/density.css; deleted none.
+- No commit/push/reset/checkout/clean/rename/deploy.

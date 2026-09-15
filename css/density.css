@@ -1,0 +1,59 @@
+/* Final layout pass: preserve content and assets; group related outputs. */
+.commercial,.ai-creative,#process,#toolkit,#contact{min-height:0;scroll-snap-align:none;scroll-snap-stop:normal}
+.commercial>.section-inner,.ai-creative>.section-inner,#process>.section-inner,#toolkit>.section-inner,#contact>.section-inner{min-height:0;padding-top:5.5rem;padding-bottom:4rem}
+.commercial .section-inner>.eyebrow,.ai-creative .section-inner>.eyebrow{margin-bottom:1.5rem}
+.commercial-product-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:2.5rem;align-items:center;margin-top:1.5rem}
+.commercial-product-row .commercial-master{margin:0}
+.commercial-product-row .commercial-summary{display:block;margin:0}
+.commercial-summary>div{margin-top:1.5rem}
+.commercial .commercial-asset{margin-top:1rem}
+.commercial-output{margin-top:2rem}
+.commercial-output>h3{font-size:clamp(1.1rem,1.7vw,1.6rem)}
+.commercial-detail{max-width:780px}
+.commercial-campaign-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:start}
+.commercial-features{margin-top:1.5rem}
+.commercial-flow{margin-top:2rem}
+.ai-comparison{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:start;margin-top:2rem}
+.ai-comparison .ai-stage{width:100%;max-width:none;margin:0}
+.ai-comparison .ai-review{grid-template-columns:1fr;gap:.8rem;margin-top:1rem}
+.ai-comparison .ai-problems{grid-template-columns:1fr;gap:.6rem;margin-top:1rem}
+.ai-comparison .ai-problems>div{display:grid;grid-template-columns:6rem 1fr;gap:.6rem;padding-top:.6rem}
+.ai-comparison .ai-problems dd{margin:0}
+.ai-comparison .ai-direction-list{margin-top:1rem;gap:1rem}
+.ai-direction{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:2rem;margin:2rem 0}
+.ai-direction>.ai-direction-list{margin:0}
+.ai-stage-final{margin-top:2.5rem}
+#process .process-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.5rem;margin:2rem 0 0}
+#process .process-list li{display:block;padding:1rem 0}
+#process .process-list h3{font-size:clamp(1.4rem,2.5vw,2.5rem);margin:.7rem 0}
+#process .process-list p{font-size:.9rem}
+#toolkit .toolkit-grid{margin-top:2rem}
+#contact .contact-identity{margin-top:2rem}
+#contact .contact-links{margin:2rem 0 1.5rem}
+#contact>.section-inner{padding-top:5.5rem;padding-bottom:4rem}
+@media(min-width:1025px){
+ #project-ai .ai-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.5rem;margin-top:2rem}
+ #project-ai .ai-flow li{display:block;padding:1rem 0}
+ #project-ai .ai-flow h3{font-size:clamp(1.4rem,2.5vw,2.5rem);margin:.6rem 0}
+}
+@media(max-width:1024px){
+ .commercial-product-row{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1.5rem}
+ .ai-comparison{grid-template-columns:1fr}
+ .ai-comparison .ai-stage{width:92%;margin:auto}
+ #process .process-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:720px){
+ .commercial>.section-inner,.ai-creative>.section-inner,#process>.section-inner,#toolkit>.section-inner,#contact>.section-inner{padding-top:4.5rem;padding-bottom:4rem}
+ .commercial-product-row,.commercial-campaign-pair,.ai-direction{grid-template-columns:1fr}
+ .commercial-product-row{gap:1rem}
+ .commercial-summary>div{margin-top:1rem}
+ .ai-comparison .ai-stage{width:94%}
+ .ai-direction{gap:1rem;margin:1.5rem 0}
+ .ai-comparison .ai-direction-list{grid-template-columns:1fr}
+ .ai-stage-final{width:100%}
+ #process .process-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem 1rem}
+ #toolkit .toolkit-grid{gap:1rem}
+ #toolkit .toolkit-grid ul{margin-top:.7rem}
+ #contact .contact-identity{margin-top:1.5rem}
+ #contact .contact-links{margin:1.5rem 0 1rem}
+}

@@ -38,7 +38,7 @@ const server = http.createServer((req,res) => {
    assert.match(commercialText,/WORK EXPERIENCE BASED RECONSTRUCTION/);
    assert.equal((commercialText.match(/VISUAL CASE IN DEVELOPMENT/g)||[]).length,0);
    assert.equal(/MORU L01|Portable Table Light|CORDLESS|USB-C|CASE IN PREPARATION|CONTEXT|RESPOND|IMPROVE|SHARE|CTR|전환율|매출|판매량|할인율/.test(commercialText),false);
-   assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','social-01','social-02','social-03','story']);
+   assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','story','social-01','social-02','social-03']);
    assert.equal(/\d+\s*(?:mAh|lm|kg|시간|원|%)/i.test(commercialText),false);
    assert.deepEqual(await page.locator('.ai-flow h3').allTextContents(),['BRIEF','GENERATE','REVIEW','REFINE','FINAL']);
    assert.deepEqual(await page.locator('.ai-stage').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['initial','revision','final']);
@@ -133,6 +133,9 @@ const server = http.createServer((req,res) => {
      await img.evaluate(e=>e.decode());
      assert.equal(await img.evaluate(e=>e.naturalWidth>0&&Math.abs(e.clientWidth/e.clientHeight-e.naturalWidth/e.naturalHeight)<.02&&getComputedStyle(e).objectFit==='contain'&&!!e.alt),true);
    }
+   assert.equal(await page.locator('.ai-comparison').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>1024?2:1);
+   assert.equal(await page.locator('.commercial-campaign-pair').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?2:1);
+   for(const id of ['process','toolkit','contact'])assert.equal(await page.locator('#'+id+' .section-inner').evaluate(e=>getComputedStyle(e).minHeight),'0px');
    const aiWidths=await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().width));
    assert.equal(aiWidths[2]>aiWidths[0]&&aiWidths[2]>aiWidths[1],true);
    assert.equal(await page.locator('.commercial-social').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);

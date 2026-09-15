@@ -37,6 +37,10 @@ function updateNavigation() {
   sections.forEach((section) => {
     if (section.getBoundingClientRect().top <= readingLine) current = section;
   });
+  // A compact final section may never reach the reading line.
+  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    current = sections[sections.length - 1];
+  }
   links.forEach((link) => {
     const active = link.hash === `#${current?.id}`;
     link.classList.toggle('active', active);
