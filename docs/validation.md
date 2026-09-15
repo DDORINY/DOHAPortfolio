@@ -229,3 +229,67 @@ No commit, push, reset, clean, checkout, rename or deploy performed.
 - Full screen-reader/cross-browser audits and quantified performance benchmarks were not run.
 - Lyric Carousel and Short-form Teaser remain unproduced; no completion claim or large placeholder.
 - No commit, push, reset, checkout, clean, repository rename or deploy performed.
+## Project 02 — Commercial Case Architecture (2026-09-15)
+- Repository: DDORINY/DOHAPortfolio; main; START HEAD b6dbb67ffc6bda9be67c9bce7ac7faf3f75038e6.
+- Starting git status: clean.
+- Only section 06/07 markup and one scoped stylesheet link changed in index.html.
+- Five-stage commercial flow; four short case questions; one development status; five hidden semantic asset slots.
+- No product, brand, price, specifications, claims, imagery or results invented. All five assets remain TO CREATE.
+- Ten protected sections compared byte-for-byte with HEAD markup: identical.
+- OFFBEAT 12 images, Social order, original ratios, audio metadata and keyboard playback/pause: PASS.
+- Chromium widths 1920 / 1440 / 1024 / 768 / 390 / 320: PASS; no overflow, clipping or navigation overlap.
+- Navigation count/IDs, active state, updated Commercial Case label, keyboard focus/skip link: PASS.
+- Mobile reading order follows DOM; reduced motion, normal-motion deep links and JS-disabled content: PASS.
+- Heading hierarchy: existing h1, section h2, flow/method/plan h3. Hidden figures excluded from reading order.
+- HTML nesting/local references, duplicate IDs, browser CSS declarations, JS syntax and git diff --check: PASS.
+- Console/runtime/network errors: none. Desktop Case and mobile Hero screenshots inspected.
+- Project 03 and Contact markup unchanged. Shared CSS, main.js and media untouched.
+- Full screen-reader and cross-browser audits were not performed.
+- Modified index.html, validate-foundation.cjs, design/ASSET-MAP.md, docs/project-plan.md and this log.
+- Added css/content-operation.css and docs/content-operation-case.md; deleted none.
+- No commit, push, reset, clean, checkout, repository rename or deploy.
+## MORU L01 — Concept / Asset Plan (2026-09-15)
+- START HEAD b6dbb67ffc6bda9be67c9bce7ac7faf3f75038e6; main; DDORINY/DOHAPortfolio.
+- Starting state: five modified tracked files and two untracked Project 02 files from the previous task, preserved.
+- MORU is explicitly a portfolio Concept Product Brand; L01 is a Portable Table Light.
+- Work Experience Based Reconstruction label, concept copy, four authorized features and five-stage flow present.
+- No invented product measurements, prices, certifications, reviews or performance results.
+- Five hidden Visual Set figures retained; Product Master plus five output paths documented as TO CREATE.
+- No image created, no nonexistent asset src, no HEX palette finalized.
+- Protected ten sections identical to pre-task working tree. All OFFBEAT/Cover/MP3 SHA256 hashes unchanged.
+- Chromium 1920 / 1440 / 1024 / 768 / 390 / 320: PASS, no horizontal overflow, text clipping or nav overlap.
+- Twelve navigation entries and IDs maintained; 06 label MORU L01, 07 Commercial Case.
+- OFFBEAT image loading/order/ratios and native audio keyboard playback/pause: PASS.
+- Keyboard, focus, reduced-motion, normal-motion deep links, JS-disabled content and ARIA references: PASS.
+- Existing h1 / section h2 / list h3 hierarchy retained; features use semantic dt/dd, hidden slots remain outside reading order.
+- HTML nesting/local references, duplicate IDs, browser CSS declaration checks, JS syntax: PASS.
+- Console/runtime/network errors: none. Mobile Commercial Case screenshot inspected.
+- Full screen-reader/cross-browser audits were not performed.
+- Updated index.html, css/content-operation.css, validate-foundation.cjs, docs/content-operation-case.md,
+  docs/project-plan.md, design/ASSET-MAP.md and this log. No files created or deleted in this task.
+- No commit, push, reset, clean, checkout, repository rename or deploy.
+- Next: create MORU L01 Product Master, then finalize palette and produce the five planned outputs.
+## MORU — Calm Barrier Serum Visual Integration (2026-09-15)
+- START HEAD b6dbb67ffc6bda9be67c9bce7ac7faf3f75038e6; branch main.
+- Starting state: five modified tracked files, two existing untracked Project 02 files and user-provided MORU assets; preserved.
+- Current Project 02 is MORU / CALM BARRIER SERUM, Skincare / Commercial Content / E-commerce.
+- Previous lamp direction removed from current HTML and planning documents. Earlier validation entries below are historical Previous Direction records only.
+- Verified nine actual PNG paths; all match requested filenames. Dimensions recorded in ASSET-MAP; no assumed format dimensions.
+- Section 06: Product Master / Hero / three approved product messages / Content Flow.
+- Section 07: Detail / Desktop / Mobile / Social 01–03 / Story, all connected as real outputs.
+- Social 01 landscape and Social 02/03 square: natural ratios preserved with desktop 3 columns / mobile 1 column.
+- No generated imagery, product specifications, efficacy claims, prices or performance metrics added.
+- No visible development placeholders or hidden output slots remain.
+- Protected ten sections identical to pre-task working tree; all MORU, OFFBEAT, Cover and MP3 SHA256 hashes unchanged.
+- Chromium at 1920 / 1440 / 1024 / 768 / 390 / 320: PASS. No image/text clipping, horizontal overflow or navigation overlap.
+- Nine MORU images decode successfully, retain native aspect ratios and have descriptive alt.
+- Twelve section numbers/IDs maintained; 06 MORU / 07 Commercial Case.
+- OFFBEAT image references/order, Cover, audio metadata and keyboard playback/pause: PASS.
+- Keyboard/focus, skip link, reduced motion, deep links, JS-disabled content, ARIA and duplicate IDs: PASS.
+- HTML nesting/local references, browser CSS declarations and JS syntax: PASS. Console/runtime/network errors: none.
+- Desktop Master and mobile Detail screenshots visually inspected.
+- Explicit width/height, lazy loading and async decoding applied; no re-encoding or compression.
+- Full screen-reader/cross-browser audits and quantified performance benchmarks were not performed.
+- Updated index.html, css/content-operation.css, validate-foundation.cjs, docs/content-operation-case.md,
+  docs/project-plan.md, design/ASSET-MAP.md and this log. No files created/deleted by this task.
+- No commit, push, reset, checkout, clean, rename, move, duplicate copy or deploy.

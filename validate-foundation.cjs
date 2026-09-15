@@ -27,9 +27,22 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('.side-project').count(),0);
    assert.equal(await page.locator('.offbeat img').count(),12);
    assert.equal(/Digital Music Curation|MOOD DROP|AFTER MIDNIGHT|ONE ARTIST|IF YOU LIKE|TOO MUCH MUSIC/i.test(await page.locator('.offbeat').allTextContents().then(es=>es.join(' '))),false);
+   assert.deepEqual(await page.locator('.commercial-flow h3').allTextContents(),['PRODUCT','INFORMATION','VISUAL','CAMPAIGN','ADAPTATION']);
+   assert.deepEqual(await page.locator('.commercial-features dt').allTextContents(),['MOISTURE','LIGHT TEXTURE','DAILY ROUTINE']);
+   assert.equal(await page.locator('.commercial-asset[hidden]').count(),0);
+   assert.equal(await page.locator('.commercial img').count(),9);
+   const commercialText=(await page.locator('.commercial').allTextContents()).join(' ');
+   assert.match(commercialText,/MORU/);
+   assert.match(commercialText,/Concept Product Brand/);
+   assert.match(commercialText,/CALM BARRIER SERUM/);
+   assert.match(commercialText,/WORK EXPERIENCE BASED RECONSTRUCTION/);
+   assert.equal((commercialText.match(/VISUAL CASE IN DEVELOPMENT/g)||[]).length,0);
+   assert.equal(/MORU L01|Portable Table Light|CORDLESS|USB-C|CASE IN PREPARATION|CONTEXT|RESPOND|IMPROVE|SHARE|CTR|전환율|매출|판매량|할인율/.test(commercialText),false);
+   assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','social-01','social-02','social-03','story']);
+   assert.equal(/\d+\s*(?:mAh|lm|kg|시간|원|%)/i.test(commercialText),false);
    const ids=await page.locator('.portfolio-section').evaluateAll(s=>s.map(e=>e.id));
    assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
-   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','Content Operation','Operation Case','AI Creative','AI Case','Process','Toolkit','Contact']);
+   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
    const missingAria=await page.locator('[aria-labelledby],[aria-controls]').evaluateAll(es=>es.flatMap(e=>['aria-labelledby','aria-controls'].flatMap(a=>(e.getAttribute(a)||'').split(/\s+/).filter(Boolean))).filter(id=>!document.getElementById(id)));assert.deepEqual(missingAria,[]);
    assert.equal(await page.locator('.portfolio-section[id*="music"]').count(),0);
    assert.equal(await page.locator('#saved-song').count(),1);
@@ -63,7 +76,7 @@ const server = http.createServer((req,res) => {
       }return bad;
     });assert.deepEqual(issues,[],`${width} #${id}`);
     assert.equal(await page.locator(`#${id}`).evaluate(e=>getComputedStyle(e.querySelector('.reveal')).opacity),'1');
-    if([1440,390].includes(width)&&['project-digital','project-digital-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
+    if([1440,390].includes(width)&&['project-digital','project-digital-detail','project-operation','project-operation-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
     if(width<=720){
       await page.locator(`#${id}`).evaluate(section=>{
         const nodes=[...section.querySelectorAll('h1,h2,h3,h4,h5,p,a,dt,dd,li,img,audio')];
@@ -111,6 +124,12 @@ const server = http.createServer((req,res) => {
      assert.equal(await img.evaluate(e=>getComputedStyle(e).objectFit==='contain'),true);
      assert.equal((await img.getAttribute('alt')).length>0,true);
    }
+   for(const img of await page.locator('.commercial img').all()){
+     await img.scrollIntoViewIfNeeded();
+     await img.evaluate(e=>e.decode());
+     assert.equal(await img.evaluate(e=>e.naturalWidth>0&&Math.abs(e.clientWidth/e.clientHeight-e.naturalWidth/e.naturalHeight)<.02&&getComputedStyle(e).objectFit==='contain'&&!!e.alt),true);
+   }
+   assert.equal(await page.locator('.commercial-social').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
    assert.equal(await page.locator('.release-social-frame').first().evaluate(e=>Math.abs(e.clientWidth-e.clientHeight)<=1),true);
    assert.equal(await page.locator('.release-social-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
    if([1440,390].includes(width)){
@@ -132,7 +151,7 @@ const server = http.createServer((req,res) => {
   await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.id),'cover');
   await page.locator('.section-nav a[href="#project-operation"]').focus();await page.keyboard.press('Enter');
   await page.waitForFunction(()=>location.hash==='#project-operation');
-  assert.equal(await page.locator('.section-nav a[href="#project-operation"]').getAttribute('aria-label'),'6. Content Operation');
+  assert.equal(await page.locator('.section-nav a[href="#project-operation"]').getAttribute('aria-label'),'6. MORU');
   await page.goto('http://127.0.0.1:8000/#project-operation-detail');
   await page.waitForFunction(()=>document.querySelector('#project-operation-detail').classList.contains('is-visible') && getComputedStyle(document.querySelector('#project-operation-detail .reveal')).opacity==='1');
   assert.equal(await page.locator('#project-operation-detail .reveal').first().evaluate(e=>getComputedStyle(e).opacity),'1');

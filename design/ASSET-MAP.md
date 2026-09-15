@@ -35,8 +35,26 @@ Audio는 접근 가능한 기존 label과 controls, preload=metadata를 유지�
 - Short-form Teaser: 미제작. 실제 MP3 기반 1080×1920 / 15–20초 계획만 유지합니다.
 - 웹에는 위 미제작 콘텐츠의 큰 placeholder를 남기지 않습니다.
 
+## Project 02 — MORU / CALM BARRIER SERUM
+[현재 Case 정의](../docs/content-operation-case.md). 사용자 제공 실제 Asset 9개를 연결했습니다.
+
+| Asset | 실제 경로 | 원본 크기 | 상태 |
+| --- | --- | --- | --- |
+| master | assets/images/projects/moru/product/moru-calm-barrier-serum-master.png | 1484×1060 | EXISTS / WEB 연결 완료 |
+| hero | assets/images/projects/moru/hero/moru-calm-barrier-serum-hero.png | 1672×941 | EXISTS / WEB 연결 완료 |
+| detail | assets/images/projects/moru/detail/moru-calm-barrier-serum-detail.png | 822×1914 | EXISTS / WEB 연결 완료 |
+| desktop | assets/images/projects/moru/campaign/moru-calm-barrier-serum-desktop.png | 1916×821 | EXISTS / WEB 연결 완료 |
+| mobile | assets/images/projects/moru/campaign/moru-calm-barrier-serum-mobile.png | 1122×1402 | EXISTS / WEB 연결 완료 |
+| social-01 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-01.png | 1672×941 | EXISTS / WEB 연결 완료 |
+| social-02 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-02.png | 1254×1254 | EXISTS / WEB 연결 완료 |
+| social-03 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-03.png | 1254×1254 | EXISTS / WEB 연결 완료 |
+| story | assets/images/projects/moru/campaign/moru-calm-barrier-serum-story.png | 941×1672 | EXISTS / WEB 연결 완료 |
+
+06: Product Master / Hero. 07: Detail / Desktop / Mobile / Social 01–03 / Story.
+파일명·경로 차이 없음. 예상 규격과 달라 실제 크기를 기록했습니다.
+Social 01 가로형을 포함해 모든 원본 비율을 유지합니다. 신규 이미지 생성·변환·이동·복사 없음.
+
 ## 다른 영역 — 유지
-- Project 02: operation-context / operation-action / operation-review / operation-material.
 - Project 03: iteration-01 / revision / final.
 - Contact: 이메일과 Back to top 유지.
 - 기존 design 폴더, .gitkeep, exports와 비활성 CSS 파일 보존.
