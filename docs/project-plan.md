@@ -31,8 +31,10 @@ Experience는 회사·기간·역할을 요약하고 Project 02는 업무 방식
   Product → Information → Visual → Campaign → Adaptation.
   06은 Master·Hero·Message, 07은 Detail·Desktop·Mobile·Social 3종·Story의 실제 결과물을 표시합니다.
   [Content Operation Case](content-operation-case.md)가 최신 Project 02 기준입니다.
-- Project 03: Brief → Direction → Prompt → Generation → Selection → Revision → Final.
-  목적, 기준, 비교, 문제 발견, 수정, 재검토, 최종 선택을 기록합니다.
+- Project 03: Brief → Generate → Review → Refine → Final.
+  Saved Song Cover Artwork의 Initial / Revision / Final 실제 이미지 3장과 선택 근거를 보여줍니다.
+  Project 01의 Release 결과물과 구분하여 Visual Direction의 수정 과정을 기록합니다.
+  [AI Creative Case](ai-creative-case.md)가 최신 기준입니다.
 - 기획상 저장한 노래는 OFFBEAT RELEASE 001입니다.
   현재 웹에서는 AI Case와 Process 사이의 secondary content로 남아 있습니다.
   메인 12개 navigation은 유지합니다. 사용자가 제공한 실제 커버와 MP3를 연결했습니다.
@@ -42,6 +44,6 @@ Experience는 회사·기간·역할을 요약하고 Project 02는 업무 방식
 1. OFFBEAT Brand KV / Release 001 KV / Social 3×3 / Lyric Content / Short-form Teaser 제작 계획 검토
 2. 별도 작업에서 Project 01과 RELEASE 001 웹 관계 통합 (이번에는 미구현)
 2. MORU 스킨케어 Commercial Visual Set 웹 통합 완료 — 최종 화면 검토
-3. Project 03 초기안·수정안·최종안과 선택 근거 확보
+3. Project 03 실제 이미지 3장과 판단 과정 웹 통합 완료 — 최종 화면 검토
 4. 확인 가능한 수치만 근거와 함께 사용
 5. 실제 자료 반영 후 반응형·접근성·출처 점검

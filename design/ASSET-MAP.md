@@ -54,8 +54,20 @@ Audio는 접근 가능한 기존 label과 controls, preload=metadata를 유지�
 파일명·경로 차이 없음. 예상 규격과 달라 실제 크기를 기록했습니다.
 Social 01 가로형을 포함해 모든 원본 비율을 유지합니다. 신규 이미지 생성·변환·이동·복사 없음.
 
+## Project 03 — Saved Song / AI Creative
+공통 실제 경로: assets/images/projects/ai-creative/saved-song/
+
+| Stage | File | Dimensions | Status |
+| --- | --- | --- | --- |
+| Initial | 01-initial.png | 1402×1122 | EXISTS / WEB |
+| Revision | 02-revision.png | 1402×1122 | EXISTS / WEB |
+| Final | 03-final.png | 1254×1254 | EXISTS / WEB |
+
+09에서 Initial → Revision → Final 순서로 표시하고 Final을 가장 크게 배치합니다.
+원본 파일·비율 보존. [AI Creative Case](../docs/ai-creative-case.md)에 판단 과정을 기록했습니다.
+기존 OFFBEAT 커버와 Final은 시작 시 같은 내용이었으며 사용자 변경을 그대로 보존했습니다.
+
 ## 다른 영역 — 유지
-- Project 03: iteration-01 / revision / final.
 - Contact: 이메일과 Back to top 유지.
 - 기존 design 폴더, .gitkeep, exports와 비활성 CSS 파일 보존.
 - css/side-project.css는 파일을 보존하고 HTML stylesheet 연결만 제거했습니다.

@@ -40,6 +40,10 @@ const server = http.createServer((req,res) => {
    assert.equal(/MORU L01|Portable Table Light|CORDLESS|USB-C|CASE IN PREPARATION|CONTEXT|RESPOND|IMPROVE|SHARE|CTR|전환율|매출|판매량|할인율/.test(commercialText),false);
    assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','social-01','social-02','social-03','story']);
    assert.equal(/\d+\s*(?:mAh|lm|kg|시간|원|%)/i.test(commercialText),false);
+   assert.deepEqual(await page.locator('.ai-flow h3').allTextContents(),['BRIEF','GENERATE','REVIEW','REFINE','FINAL']);
+   assert.deepEqual(await page.locator('.ai-stage').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['initial','revision','final']);
+   assert.deepEqual(await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),['01-initial.png','02-revision.png','03-final.png']);
+   assert.equal(/CASE IN PROGRESS|placeholder|Content coming/i.test(await page.locator('#project-ai-detail').textContent()),false);
    const ids=await page.locator('.portfolio-section').evaluateAll(s=>s.map(e=>e.id));
    assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
    assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
@@ -76,7 +80,7 @@ const server = http.createServer((req,res) => {
       }return bad;
     });assert.deepEqual(issues,[],`${width} #${id}`);
     assert.equal(await page.locator(`#${id}`).evaluate(e=>getComputedStyle(e.querySelector('.reveal')).opacity),'1');
-    if([1440,390].includes(width)&&['project-digital','project-digital-detail','project-operation','project-operation-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
+    if([1440,390].includes(width)&&['project-digital','project-digital-detail','project-operation','project-operation-detail','project-ai','project-ai-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
     if(width<=720){
       await page.locator(`#${id}`).evaluate(section=>{
         const nodes=[...section.querySelectorAll('h1,h2,h3,h4,h5,p,a,dt,dd,li,img,audio')];
@@ -124,11 +128,13 @@ const server = http.createServer((req,res) => {
      assert.equal(await img.evaluate(e=>getComputedStyle(e).objectFit==='contain'),true);
      assert.equal((await img.getAttribute('alt')).length>0,true);
    }
-   for(const img of await page.locator('.commercial img').all()){
+   for(const img of await page.locator('.commercial img,.ai-visual img').all()){
      await img.scrollIntoViewIfNeeded();
      await img.evaluate(e=>e.decode());
      assert.equal(await img.evaluate(e=>e.naturalWidth>0&&Math.abs(e.clientWidth/e.clientHeight-e.naturalWidth/e.naturalHeight)<.02&&getComputedStyle(e).objectFit==='contain'&&!!e.alt),true);
    }
+   const aiWidths=await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().width));
+   assert.equal(aiWidths[2]>aiWidths[0]&&aiWidths[2]>aiWidths[1],true);
    assert.equal(await page.locator('.commercial-social').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
    assert.equal(await page.locator('.release-social-frame').first().evaluate(e=>Math.abs(e.clientWidth-e.clientHeight)<=1),true);
    assert.equal(await page.locator('.release-social-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
