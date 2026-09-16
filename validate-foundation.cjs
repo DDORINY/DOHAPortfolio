@@ -25,7 +25,7 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('.release-social-grid img').count(),9);
    assert.deepEqual(await page.locator('.release-social-grid img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),["01-offbeat-brand.png","02-release-001.png","03-saved-song.png","04-lyric.png","05-cover-art.png","06-late-night.png","07-sound.png","08-moment.png","09-still-here.png"]);
    assert.equal(await page.locator('.side-project').count(),0);
-   assert.equal(await page.locator('.offbeat img').count(),12);
+   assert.equal(await page.locator('.offbeat img').count(),16);
    assert.equal(/Digital Music Curation|MOOD DROP|AFTER MIDNIGHT|ONE ARTIST|IF YOU LIKE|TOO MUCH MUSIC/i.test(await page.locator('.offbeat').allTextContents().then(es=>es.join(' '))),false);
    assert.deepEqual(await page.locator('.commercial-flow h3').allTextContents(),['PRODUCT','INFORMATION','VISUAL','CAMPAIGN','ADAPTATION']);
    assert.deepEqual(await page.locator('.commercial-features dt').allTextContents(),['MOISTURE','LIGHT TEXTURE','DAILY ROUTINE']);
@@ -45,8 +45,39 @@ const server = http.createServer((req,res) => {
    assert.deepEqual(await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),['01-initial.png','02-revision.png','03-final.png']);
    assert.equal(/CASE IN PROGRESS|placeholder|Content coming/i.test(await page.locator('#project-ai-detail').textContent()),false);
    const ids=await page.locator('.portfolio-section').evaluateAll(s=>s.map(e=>e.id));
-   assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
-   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
+   assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','offbeat-tracks','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
+   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','OFFBEAT TRACKS','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
+   assert.deepEqual(await page.locator('.portfolio-section > .section-inner > .eyebrow').allTextContents().then(es=>es.map(e=>e.split(' / ')[0])),Array.from({length:13},(_,i)=>String(i+1).padStart(2,'0')));
+   const trackTitles=['I Can Read You','Stay on the line','Who Did That',"You don't know me like that"];
+   assert.deepEqual(await page.locator('.track-card h3').allTextContents(),trackTitles);
+   assert.deepEqual(await page.locator('.track-number').allTextContents(),['01 / SINGLE','02 / SINGLE','03 / SINGLE','04 / SINGLE']);
+   assert.deepEqual(await page.locator('.track-meta').allTextContents(),['ALT POP · ALT R&B · FEMALE VOCAL','ALTERNATIVE POP · FEMALE VOCAL','K-POP · ALTERNATIVE POP · FEMALE VOCAL','ALT POP · FEMALE VOCAL']);
+   assert.deepEqual(await page.locator('.track-character').allTextContents(),['Dreamy · Surreal · Intuitive','Dreamy · Emotional · Late Night','Playful · Addictive · Bold','Cool · Detached · Attitude']);
+   assert.equal(await page.locator('.track-card .track-role').count(),0);
+   assert.equal(await page.locator('.track-shared-role').count(),1);
+   assert.equal(await page.locator('.track-player>p').count(),0);
+   assert.equal(await page.locator('.track-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?2:1);
+   for(const [i,title] of trackTitles.entries()){
+     const card=page.locator('.track-card').nth(i),img=card.locator('img'),audio=card.locator('audio');
+     assert.equal(await img.getAttribute('src'),`assets/images/projects/saved-song/${title}.png`);
+     assert.equal(await card.locator('source').getAttribute('src'),`assets/audio/${title}.mp3`);
+     assert.equal(fs.existsSync(path.join(root,await img.getAttribute('src'))),true);
+     assert.equal(fs.existsSync(path.join(root,await card.locator('source').getAttribute('src'))),true);
+     await img.scrollIntoViewIfNeeded();await img.evaluate(e=>e.decode());
+     assert.equal(await img.evaluate(e=>Math.abs(e.getBoundingClientRect().width-e.getBoundingClientRect().height)<1&&getComputedStyle(e).filter==='none'),true);
+     assert.equal((await img.getAttribute('alt')).includes(title),true);
+     assert.equal(await audio.getAttribute('preload'),'metadata');
+     await page.waitForFunction(i=>document.querySelectorAll('.track-player audio')[i].readyState>=1,i);
+     assert.equal(await audio.evaluate(e=>Number.isFinite(e.duration)&&e.duration>0&&!e.error&&e.paused&&!e.autoplay&&!e.loop),true);
+     assert.equal(await audio.evaluate(e=>e.getBoundingClientRect().width<=e.parentElement.getBoundingClientRect().width),true);
+     await audio.evaluate(async e=>{e.muted=true;await e.play()});
+     await page.waitForFunction(i=>document.querySelectorAll('.track-player audio')[i].currentTime>.1,i);
+     await audio.evaluate(e=>e.pause());
+     assert.equal(await audio.evaluate(e=>e.paused&&!e.error),true);
+     assert.equal(await audio.getAttribute('aria-label'),`Listen to ${title}`);
+     const order=await card.evaluate(e=>['.track-artwork','h3','.track-meta','.track-character','.track-player'].map(s=>e.querySelector(s).getBoundingClientRect().top));
+     assert.equal(order.every((y,j)=>j===0||y>=order[j-1]),true);
+   }
    const missingAria=await page.locator('[aria-labelledby],[aria-controls]').evaluateAll(es=>es.flatMap(e=>['aria-labelledby','aria-controls'].flatMap(a=>(e.getAttribute(a)||'').split(/\s+/).filter(Boolean))).filter(id=>!document.getElementById(id)));assert.deepEqual(missingAria,[]);
    assert.equal(await page.locator('.portfolio-section[id*="music"]').count(),0);
    assert.equal(await page.locator('#saved-song').count(),1);
@@ -58,8 +89,8 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('#saved-song audio').count(),1);
    assert.equal(await page.locator('#saved-song audio').getAttribute('preload'),'metadata');
    assert.equal(await page.locator('#saved-song audio').evaluate(e=>e.paused && !e.autoplay && !e.loop),true);
-   assert.equal(new Set(ids).size,12);
-   assert.equal(await page.locator('.section-nav a').count(),12);
+   assert.equal(new Set(ids).size,13);
+   assert.equal(await page.locator('.section-nav a').count(),13);
    const duplicateIds=await page.locator('[id]').evaluateAll(es=>es.map(e=>e.id).filter((id,i,arr)=>arr.indexOf(id)!==i));assert.deepEqual(duplicateIds,[]);
    const broken=await page.locator('[href],[src]').evaluateAll(es=>es.flatMap(e=>['href','src'].filter(a=>e.hasAttribute(a)).map(a=>e.getAttribute(a))).filter(s=>s.startsWith('#')&&!document.getElementById(s.slice(1))));assert.deepEqual(broken,[]);
    for(const id of ids) {
@@ -80,7 +111,7 @@ const server = http.createServer((req,res) => {
       }return bad;
     });assert.deepEqual(issues,[],`${width} #${id}`);
     assert.equal(await page.locator(`#${id}`).evaluate(e=>getComputedStyle(e.querySelector('.reveal')).opacity),'1');
-    if([1440,390].includes(width)&&['project-digital','project-digital-detail','project-operation','project-operation-detail','project-ai','project-ai-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
+    if([1440,390].includes(width)&&['project-digital','project-digital-detail','offbeat-tracks','project-operation','project-operation-detail','project-ai','project-ai-detail'].includes(id))await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}-${id}.png`});
     if(width<=720){
       await page.locator(`#${id}`).evaluate(section=>{
         const nodes=[...section.querySelectorAll('h1,h2,h3,h4,h5,p,a,dt,dd,li,img,audio')];
@@ -151,7 +182,7 @@ const server = http.createServer((req,res) => {
    await page.locator('a[href="#cover"]').last().click();
    await page.waitForFunction(()=>document.querySelector('.section-nav a[aria-current]')?.hash==='#cover');
    await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}.png`});
-   results.push({width,height,sections:12,overflow:0,errors});
+   results.push({width,height,sections:13,overflow:0,errors});
    await page.close();
   }
   const page=await browser.newPage({viewport:{width:390,height:844}});
@@ -160,7 +191,7 @@ const server = http.createServer((req,res) => {
   await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.id),'cover');
   await page.locator('.section-nav a[href="#project-operation"]').focus();await page.keyboard.press('Enter');
   await page.waitForFunction(()=>location.hash==='#project-operation');
-  assert.equal(await page.locator('.section-nav a[href="#project-operation"]').getAttribute('aria-label'),'6. MORU');
+  assert.equal(await page.locator('.section-nav a[href="#project-operation"]').getAttribute('aria-label'),'7. MORU');
   await page.goto('http://127.0.0.1:8000/#project-operation-detail');
   await page.waitForFunction(()=>document.querySelector('#project-operation-detail').classList.contains('is-visible') && getComputedStyle(document.querySelector('#project-operation-detail .reveal')).opacity==='1');
   assert.equal(await page.locator('#project-operation-detail .reveal').first().evaluate(e=>getComputedStyle(e).opacity),'1');
