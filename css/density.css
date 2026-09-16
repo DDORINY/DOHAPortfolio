@@ -40,10 +40,11 @@
  /* Desktop hierarchy: keep the composition frame broad, then size content by role. */
  .section-heading{max-width:1080px}
  .section-heading h2{font-size:clamp(3rem,5.25vw,6.5rem)}
- .release-brand-heading h2{font-size:clamp(3rem,6.2vw,7.25rem)}
+ .release-brand-heading h2,#project-operation-title{font-size:clamp(3rem,6vw,6.75rem);font-weight:800;line-height:.94;letter-spacing:-.06em}
  .release-heading h2{font-size:clamp(3rem,4.5vw,5rem)}
  .track-section-heading{max-width:none}
- .track-section-heading h2{font-size:clamp(3rem,5.25vw,6rem)}
+ #experience-title,#offbeat-tracks-title,#project-operation-detail-title,#project-ai-title,#project-ai-detail-title{font-size:clamp(3rem,4.75vw,5.75rem);font-weight:700;line-height:1.06;letter-spacing:-.045em}
+ #process-title,#toolkit-title,#contact-title{font-size:clamp(2.75rem,4vw,4.75rem);font-weight:700;line-height:1.08;letter-spacing:-.04em}
 
  .release-brand-heading,.release-visual{max-width:1240px;margin-left:auto;margin-right:auto}
  .release-system,.release-summary,.release-social,.release-final{max-width:1120px;margin-left:auto;margin-right:auto}
@@ -61,12 +62,18 @@
  #project-ai .ai-flow h3{font-size:clamp(1.4rem,2.5vw,2.5rem);margin:.6rem 0}
 }
 @media(max-width:1024px){
+ .release-brand-heading h2,#project-operation-title{font-size:clamp(3rem,7vw,4.75rem);font-weight:800;line-height:.96;letter-spacing:-.06em}
+ #experience-title,#offbeat-tracks-title,#project-operation-detail-title,#project-ai-title,#project-ai-detail-title{font-size:clamp(2.75rem,5.5vw,4rem);font-weight:700;line-height:1.06;letter-spacing:-.045em}
+ #process-title,#toolkit-title,#contact-title{font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;line-height:1.08;letter-spacing:-.04em}
  .commercial-product-row{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1.5rem}
  .ai-comparison{grid-template-columns:1fr}
  .ai-comparison .ai-stage{width:92%;margin:auto}
  #process .process-list{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:720px){
+ .release-brand-heading h2,#project-operation-title{font-size:clamp(2.375rem,10.75vw,2.75rem)}
+ #experience-title,#offbeat-tracks-title,#project-operation-detail-title,#project-ai-title,#project-ai-detail-title{font-size:clamp(2.25rem,9.25vw,2.5rem)}
+ #process-title,#toolkit-title,#contact-title{font-size:clamp(1.875rem,8vw,2.125rem)}
  .commercial>.section-inner,.ai-creative>.section-inner,#process>.section-inner,#toolkit>.section-inner,#contact>.section-inner{padding-top:4.5rem;padding-bottom:4rem}
  .commercial-product-row,.commercial-campaign-pair,.ai-direction{grid-template-columns:1fr}
  .commercial-product-row{gap:1rem}
