@@ -37,6 +37,25 @@
 #contact .contact-links{margin:2rem 0 1.5rem}
 #contact>.section-inner{padding-top:5.5rem;padding-bottom:4rem}
 @media(min-width:1025px){
+ /* Desktop hierarchy: keep the composition frame broad, then size content by role. */
+ .section-heading{max-width:1080px}
+ .section-heading h2{font-size:clamp(3rem,5.25vw,6.5rem)}
+ .release-brand-heading h2{font-size:clamp(3rem,6.2vw,7.25rem)}
+ .release-heading h2{font-size:clamp(3rem,4.5vw,5rem)}
+ .track-section-heading{max-width:none}
+ .track-section-heading h2{font-size:clamp(3rem,5.25vw,6rem)}
+
+ .release-brand-heading,.release-visual{max-width:1240px;margin-left:auto;margin-right:auto}
+ .release-system,.release-summary,.release-social,.release-final{max-width:1120px;margin-left:auto;margin-right:auto}
+ .track-archive{max-width:1160px;margin-left:auto;margin-right:auto}
+
+ .commercial-product-row{max-width:1200px;margin-left:auto;margin-right:auto}
+ #project-operation>.section-inner>.commercial-asset{max-width:1240px;margin-left:auto;margin-right:auto}
+ .commercial-features,.commercial-flow,.commercial-output,.commercial-campaign-pair{max-width:1120px;margin-left:auto;margin-right:auto}
+
+ .ai-comparison,.ai-direction{max-width:1080px;margin-left:auto;margin-right:auto}
+ .ai-stage-final{max-width:1200px;margin-left:auto;margin-right:auto}
+
  #project-ai .ai-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.5rem;margin-top:2rem}
  #project-ai .ai-flow li{display:block;padding:1rem 0}
  #project-ai .ai-flow h3{font-size:clamp(1.4rem,2.5vw,2.5rem);margin:.6rem 0}
