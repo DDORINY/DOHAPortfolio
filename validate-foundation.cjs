@@ -217,7 +217,27 @@ const server = http.createServer((req,res) => {
   assert.equal(await plain.locator('.track-card').count(),tracks.length);
   assert.deepEqual(await plain.locator('.track-grid-primary .track-card h3').allTextContents(),trackSelection.primary.map(track=>track.title));
 
-  const cssErrors=await page.evaluate(async()=>{
+  const cssValidation=await page.evaluate(async()=>{
+    function separatePriority(rawValue) {
+      let quote='',escaped=false,depth=0,priorityAt=-1;
+      for(let i=0;i<rawValue.length;i++) {
+        const character=rawValue[i];
+        if(escaped){escaped=false;continue}
+        if(character==='\\'){escaped=true;continue}
+        if(quote){if(character===quote)quote='';continue}
+        if(character==='"'||character==="'"){quote=character;continue}
+        if(character==='('){depth++;continue}
+        if(character===')'){depth=Math.max(0,depth-1);continue}
+        if(character==='!'&&!depth)priorityAt=i;
+      }
+      if(priorityAt>=0&&/^!\s*important\s*$/i.test(rawValue.slice(priorityAt))) {
+        return {value:rawValue.slice(0,priorityAt).trim(),priority:'important'};
+      }
+      return {value:rawValue.trim(),priority:''};
+    }
+    const validImportantCases=[['transition','none !important'],['transition','none!important'],['transform','none !important'],['opacity','1!important']]
+      .map(([property,rawValue])=>{const parsed=separatePriority(rawValue);return parsed.priority==='important'&&CSS.supports(property,parsed.value)});
+    const invalidRejected=!CSS.supports('transform',separatePriority('definitely-not-a-valid-transform-value').value);
     const errors=[];
     for(const sheet of [...document.styleSheets]) {
       const source=await (await fetch(sheet.href)).text();
@@ -226,12 +246,16 @@ const server = http.createServer((req,res) => {
         if(match[1].trim().startsWith('@'))continue;
         for(const declaration of match[2].split(';')) {
           const colon=declaration.indexOf(':');if(colon<0)continue;
-          const property=declaration.slice(0,colon).trim(),value=declaration.slice(colon+1).trim();
-          if(!property.startsWith('--')&&!CSS.supports(property,value))errors.push(`${sheet.href}: ${property}: ${value}`);
+          const property=declaration.slice(0,colon).trim(),rawValue=declaration.slice(colon+1).trim();
+          const {value}=separatePriority(rawValue);
+          if(!property.startsWith('--')&&!CSS.supports(property,value))errors.push(`${sheet.href}: ${property}: ${rawValue}`);
         }
       }
-    }return errors;
-  });assert.deepEqual(cssErrors,[]);
+    }return {errors,validImportantCases,invalidRejected};
+  });
+  assert.deepEqual(cssValidation.validImportantCases,[true,true,true,true]);
+  assert.equal(cssValidation.invalidRejected,true);
+  assert.deepEqual(cssValidation.errors,[]);
   console.log(JSON.stringify({responsive:results,keyboard:'PASS',deepLink:'PASS',noJavaScript:'PASS'},null,2));
  }finally {await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1});
