@@ -15,6 +15,18 @@ sections.forEach((section, index) => {
 
 const links = [...navList.querySelectorAll('a')];
 
+const motionSelectors = [
+  '.release-visual', '.release-system', '.release-social', '.release-final',
+  '.commercial-product-row', '.commercial-features', '.commercial-flow',
+  '.commercial-output', '.ai-comparison', '.ai-direction', '.ai-stage-final',
+  '.track-card', '#process .process-list li'
+];
+const motionElements = [...document.querySelectorAll(motionSelectors.join(','))];
+motionElements.forEach((element, index) => {
+  element.classList.add('motion-reveal');
+  element.style.setProperty('--motion-delay', `${Math.min(index % 5, 4) * 70}ms`);
+});
+
 // Keep reveal observation independent of navigation: tall sections must remain readable.
 if ('IntersectionObserver' in window) {
   document.documentElement.classList.add('js');
@@ -27,8 +39,60 @@ if ('IntersectionObserver' in window) {
     });
   }, { threshold: 0 });
   sections.forEach((section) => observer.observe(section));
+  motionElements.forEach((element) => observer.observe(element));
 }
 sections[0]?.classList.add('is-visible');
+
+const allAudio = [...document.querySelectorAll('audio')];
+const trackCards = [...document.querySelectorAll('.track-card')];
+
+function syncTrackState(card, isPlaying) {
+  const audio = card.querySelector('audio');
+  const control = card.querySelector('.track-artwork-control');
+  const title = card.querySelector('h3')?.textContent.trim() || 'track';
+  card.classList.toggle('is-playing', isPlaying);
+  if (control) {
+    control.setAttribute('aria-label', `${isPlaying ? 'Pause' : 'Play'} ${title}`);
+    control.setAttribute('aria-pressed', String(isPlaying));
+  }
+  if (!isPlaying && audio && !audio.paused) audio.pause();
+}
+
+trackCards.forEach((card) => {
+  const artwork = card.querySelector('.track-artwork');
+  const image = artwork?.querySelector('img');
+  const audio = card.querySelector('audio');
+  const title = card.querySelector('h3')?.textContent.trim() || 'track';
+  if (!artwork || !image || !audio) return;
+
+  const control = document.createElement('button');
+  control.type = 'button';
+  control.className = 'track-artwork-control';
+  control.setAttribute('aria-label', `Play ${title}`);
+  control.setAttribute('aria-pressed', 'false');
+  control.append(image);
+  artwork.append(control);
+
+  control.addEventListener('click', () => {
+    if (audio.paused) audio.play().catch(() => syncTrackState(card, false));
+    else audio.pause();
+  });
+});
+
+allAudio.forEach((audio) => {
+  audio.addEventListener('play', () => {
+    allAudio.forEach((other) => { if (other !== audio && !other.paused) other.pause(); });
+    trackCards.forEach((card) => syncTrackState(card, card.contains(audio)));
+  });
+  audio.addEventListener('pause', () => {
+    const card = audio.closest('.track-card');
+    if (card) syncTrackState(card, false);
+  });
+  audio.addEventListener('ended', () => {
+    const card = audio.closest('.track-card');
+    if (card) syncTrackState(card, false);
+  });
+});
 
 let scheduled = false;
 function updateNavigation() {

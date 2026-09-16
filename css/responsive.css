@@ -49,7 +49,7 @@
  .toolkit-grid{gap:2rem 1rem}
  .toolkit-grid ul{font-size:.8rem}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;scroll-snap-type:none}.js .reveal{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;scroll-snap-type:none}.js .reveal,.js .motion-reveal{opacity:1;transform:none;transition:none;transition-delay:0ms}.release-visual img,.release-social-frame img,.release-cover img,.track-artwork img,.commercial-asset img,.ai-visual img{transition:none!important;transform:none!important}.track-number::after,.section-nav a,.section-nav a::after,.site-header a,.scroll-cue,.text-link,.contact-links a{transition:none!important}}
 @media(max-width:1024px){
  .case-outline{grid-template-columns:1fr;gap:1rem}
  .case-axis br{display:none}

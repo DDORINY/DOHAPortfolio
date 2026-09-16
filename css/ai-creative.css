@@ -21,6 +21,11 @@
 .ai-problems dd,.ai-direction-list dd{font-size:.85rem;line-height:1.8;margin:.5rem 0 0}
 .ai-direction{max-width:1000px;margin:3rem auto}
 .ai-direction-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;margin:2rem 0 0}
+@media(hover:hover) and (pointer:fine){
+ .ai-visual{overflow:hidden}
+ .ai-visual img{transition:transform 420ms ease}
+ .ai-visual:hover img{transform:scale(1.015)}
+}
 @media(max-width:720px){
  .ai-flow li{grid-template-columns:1.5rem 1fr;gap:.5rem 1rem}
  .ai-flow p{grid-column:2}

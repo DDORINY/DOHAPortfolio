@@ -8,6 +8,7 @@
 .offbeat .release-meta{font-size:.8rem;color:var(--muted);line-height:1.8;margin-top:.7rem}
 .release-visual{margin:2rem 0 0}
 .release-visual img,.release-cover img{width:100%;height:auto;object-fit:contain}
+.release-visual,.release-cover figure{overflow:hidden}
 .release-brand-summary{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin:2rem 0 4rem;font-size:.95rem;line-height:1.9}
 .release-brand-summary dl{margin:0}
 .release-brand-summary dt,.release-info dt{font-size:.7rem;color:var(--accent);letter-spacing:.1em}
@@ -24,7 +25,7 @@
 .release-social,.release-final{margin-top:4rem}
 .release-social-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:2rem}
 .release-social-grid figure{margin:0}
-.release-social-frame{aspect-ratio:1;display:grid;place-items:center;background:var(--ink)}
+.release-social-frame{aspect-ratio:1;display:grid;place-items:center;overflow:hidden;background:var(--ink)}
 .release-social-frame img{width:100%;height:100%;object-fit:contain;min-height:0}
 .release-social-grid figcaption{font-size:.7rem;letter-spacing:.08em;margin-top:.6rem;color:var(--muted)}
 .release-final{scroll-margin-top:5rem}
@@ -49,9 +50,14 @@
 .track-role.track-shared-role dd{margin:0}
 .track-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem 2.5rem;margin-top:3rem}
 .track-card{display:flex;flex-direction:column;min-width:0;border-top:1px solid var(--border);padding-top:1rem}
-.track-number{font-size:.7rem;font-weight:800;letter-spacing:.14em;color:var(--accent)}
+.track-number{display:flex;justify-content:space-between;gap:1rem;font-size:.7rem;font-weight:800;letter-spacing:.14em;color:var(--accent)}
+.track-number::after{content:"PLAYING";opacity:0;transform:translateY(4px);transition:opacity 300ms ease,transform 300ms ease}
+.track-card.is-playing{border-top-color:var(--accent)}
+.track-card.is-playing .track-number::after{opacity:1;transform:none}
 .track-artwork{aspect-ratio:1;margin:1rem 0 0;overflow:hidden;background:var(--ink)}
 .track-artwork img{display:block;width:100%;height:100%;object-fit:contain}
+.track-artwork-control{display:block;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer}
+.track-artwork-control:focus-visible{outline:2px solid var(--accent);outline-offset:-5px}
 .track-content{display:flex;flex:1;flex-direction:column;padding-top:1.25rem}
 .track-content h3{font-size:clamp(1.6rem,2.8vw,2.6rem);line-height:1.05;letter-spacing:-.04em}
 .track-meta{margin-top:.75rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;color:var(--muted)}
@@ -64,6 +70,11 @@
 .track-archive-more{margin-top:3rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .track-archive-more summary{padding:1.25rem 0;cursor:pointer;font-size:.72rem;font-weight:800;letter-spacing:.12em;color:var(--accent)}
 .track-archive-more .track-grid{margin:1rem 0 3rem}
+@media(hover:hover) and (pointer:fine){
+ .release-visual img,.release-social-frame img,.release-cover img,.track-artwork img{transition:transform 420ms ease}
+ .release-visual:hover img,.release-social-frame:hover img,.release-cover figure:hover img,.track-artwork-control:hover img{transform:scale(1.015)}
+ .track-card:hover{border-top-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+}
 @media(min-width:1025px){
  .track-archive.is-expanded-archive .track-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3.5rem 2rem}
  .track-archive.is-expanded-archive .track-content h3{font-size:clamp(1.4rem,2.2vw,2.2rem)}
