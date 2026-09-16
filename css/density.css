@@ -1,6 +1,11 @@
 /* Final layout pass: preserve content and assets; group related outputs. */
 .commercial,.ai-creative,#process,#toolkit,#contact{min-height:0;scroll-snap-align:none;scroll-snap-stop:normal}
 .commercial>.section-inner,.ai-creative>.section-inner,#process>.section-inner,#toolkit>.section-inner,#contact>.section-inner{min-height:0;padding-top:5.5rem;padding-bottom:4rem}
+@media(min-width:721px){
+ #about,#experience{min-height:0;scroll-snap-align:none;scroll-snap-stop:normal}
+ #about>.section-inner{min-height:80svh}
+ #experience>.section-inner{min-height:86svh}
+}
 .commercial .section-inner>.eyebrow,.ai-creative .section-inner>.eyebrow{margin-bottom:1.5rem}
 .commercial-product-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:2.5rem;align-items:center;margin-top:1.5rem}
 .commercial-product-row .commercial-master{margin:0}

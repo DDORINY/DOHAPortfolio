@@ -4,7 +4,15 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const assert = require('assert/strict');
+const trackArchitecture = require('./scripts/render-offbeat-tracks.cjs');
 const root = __dirname;
+const tracks = trackArchitecture.loadTracks();
+const trackSelection = trackArchitecture.selectTracks(tracks);
+const renderedTracks = [...trackSelection.primary, ...trackSelection.remaining];
+const trackPositions = new Map(tracks.map((track,index)=>[track.id,index+1]));
+const indexHtml = fs.readFileSync(path.join(root,'index.html'),'utf8');
+assert.equal(trackArchitecture.markerRegion(indexHtml).current,trackArchitecture.expectedBlock());
+assert.deepEqual(trackArchitecture.runFixtureTests().map(result=>[result.tracks,result.primary,result.remaining,result.columns,result.details]),[[4,4,0,2,false],[5,5,0,3,false],[8,8,0,3,false],[9,6,3,3,true],[12,6,6,3,true],[20,6,14,3,true]]);
 const server = http.createServer((req,res) => {
   const file = path.join(root, decodeURIComponent(req.url.split('?')[0] === '/' ? '/index.html' : req.url.split('?')[0]));
   if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) {res.writeHead(404);res.end();return;}
@@ -48,24 +56,29 @@ const server = http.createServer((req,res) => {
    assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','offbeat-tracks','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
    assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','OFFBEAT TRACKS','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
    assert.deepEqual(await page.locator('.portfolio-section > .section-inner > .eyebrow').allTextContents().then(es=>es.map(e=>e.split(' / ')[0])),Array.from({length:13},(_,i)=>String(i+1).padStart(2,'0')));
-   const trackTitles=['I Can Read You','Stay on the line','Who Did That',"You don't know me like that"];
-   assert.deepEqual(await page.locator('.track-card h3').allTextContents(),trackTitles);
-   assert.deepEqual(await page.locator('.track-number').allTextContents(),['01 / SINGLE','02 / SINGLE','03 / SINGLE','04 / SINGLE']);
-   assert.deepEqual(await page.locator('.track-meta').allTextContents(),['ALT POP · ALT R&B · FEMALE VOCAL','ALTERNATIVE POP · FEMALE VOCAL','K-POP · ALTERNATIVE POP · FEMALE VOCAL','ALT POP · FEMALE VOCAL']);
-   assert.deepEqual(await page.locator('.track-character').allTextContents(),['Dreamy · Surreal · Intuitive','Dreamy · Emotional · Late Night','Playful · Addictive · Bold','Cool · Detached · Attitude']);
+   assert.deepEqual(await page.locator('.track-card h3').allTextContents(),renderedTracks.map(track=>track.title));
+   assert.deepEqual(await page.locator('.track-number').allTextContents(),renderedTracks.map(track=>`${String(trackPositions.get(track.id)).padStart(2,'0')} / SINGLE`));
+   assert.deepEqual(await page.locator('.track-meta').allTextContents(),renderedTracks.map(track=>[...track.genre,track.vocal].join(' · ')));
+   assert.deepEqual(await page.locator('.track-character').allTextContents(),renderedTracks.map(track=>track.character.join(' · ')));
    assert.equal(await page.locator('.track-card .track-role').count(),0);
    assert.equal(await page.locator('.track-shared-role').count(),1);
    assert.equal(await page.locator('.track-player>p').count(),0);
-   assert.equal(await page.locator('.track-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?2:1);
-   for(const [i,title] of trackTitles.entries()){
+   assert.equal(Number(await page.locator('.track-archive').getAttribute('data-track-count')),tracks.length);
+   assert.equal(Number(await page.locator('.track-archive').getAttribute('data-visible-count')),trackSelection.primary.length);
+   assert.equal(await page.locator('.track-grid-primary .track-card').count(),trackSelection.primary.length);
+   assert.equal(await page.locator('.track-archive-more').count(),trackSelection.remaining.length?1:0);
+   assert.equal(await page.locator('.track-grid-more .track-card').count(),trackSelection.remaining.length);
+   assert.equal(await page.locator('.track-grid-primary').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>1024&&tracks.length>=5?3:width>720?2:1);
+   if(trackSelection.remaining.length)await page.locator('.track-archive-more').evaluate(e=>e.open=true);
+   for(const [i,track] of renderedTracks.entries()){
      const card=page.locator('.track-card').nth(i),img=card.locator('img'),audio=card.locator('audio');
-     assert.equal(await img.getAttribute('src'),`assets/images/projects/saved-song/${title}.png`);
-     assert.equal(await card.locator('source').getAttribute('src'),`assets/audio/${title}.mp3`);
+     assert.equal(await img.getAttribute('src'),track.cover);
+     assert.equal(await card.locator('source').getAttribute('src'),track.audio);
      assert.equal(fs.existsSync(path.join(root,await img.getAttribute('src'))),true);
      assert.equal(fs.existsSync(path.join(root,await card.locator('source').getAttribute('src'))),true);
      await img.scrollIntoViewIfNeeded();await img.evaluate(e=>e.decode());
      assert.equal(await img.evaluate(e=>Math.abs(e.getBoundingClientRect().width-e.getBoundingClientRect().height)<1&&getComputedStyle(e).filter==='none'),true);
-     assert.equal((await img.getAttribute('alt')).includes(title),true);
+     assert.equal((await img.getAttribute('alt')).includes(track.title),true);
      assert.equal(await audio.getAttribute('preload'),'metadata');
      await page.waitForFunction(i=>document.querySelectorAll('.track-player audio')[i].readyState>=1,i);
      assert.equal(await audio.evaluate(e=>Number.isFinite(e.duration)&&e.duration>0&&!e.error&&e.paused&&!e.autoplay&&!e.loop),true);
@@ -74,7 +87,7 @@ const server = http.createServer((req,res) => {
      await page.waitForFunction(i=>document.querySelectorAll('.track-player audio')[i].currentTime>.1,i);
      await audio.evaluate(e=>e.pause());
      assert.equal(await audio.evaluate(e=>e.paused&&!e.error),true);
-     assert.equal(await audio.getAttribute('aria-label'),`Listen to ${title}`);
+     assert.equal(await audio.getAttribute('aria-label'),`Listen to ${track.title}`);
      const order=await card.evaluate(e=>['.track-artwork','h3','.track-meta','.track-character','.track-player'].map(s=>e.querySelector(s).getBoundingClientRect().top));
      assert.equal(order.every((y,j)=>j===0||y>=order[j-1]),true);
    }
@@ -201,6 +214,8 @@ const server = http.createServer((req,res) => {
   const context=await browser.newContext({javaScriptEnabled:false});const plain=await context.newPage();
   await plain.goto('http://127.0.0.1:8000');assert.equal(await plain.locator('#about .reveal').first().evaluate(e=>getComputedStyle(e).opacity),'1');
   assert.equal(await plain.locator('#saved-song').evaluate(e=>getComputedStyle(e).opacity),'1');
+  assert.equal(await plain.locator('.track-card').count(),tracks.length);
+  assert.deepEqual(await plain.locator('.track-grid-primary .track-card h3').allTextContents(),trackSelection.primary.map(track=>track.title));
 
   const cssErrors=await page.evaluate(async()=>{
     const errors=[];

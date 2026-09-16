@@ -1,0 +1,50 @@
+[
+  {
+    "id": "i-can-read-you",
+    "title": "I Can Read You",
+    "cover": "assets/images/projects/saved-song/I Can Read You.png",
+    "audio": "assets/audio/I Can Read You.mp3",
+    "genre": ["ALT POP", "ALT R&B"],
+    "vocal": "FEMALE VOCAL",
+    "character": ["Dreamy", "Surreal", "Intuitive"],
+    "year": 2026,
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "stay-on-the-line",
+    "title": "Stay on the line",
+    "cover": "assets/images/projects/saved-song/Stay on the line.png",
+    "audio": "assets/audio/Stay on the line.mp3",
+    "genre": ["ALTERNATIVE POP"],
+    "vocal": "FEMALE VOCAL",
+    "character": ["Dreamy", "Emotional", "Late Night"],
+    "year": 2026,
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "who-did-that",
+    "title": "Who Did That",
+    "cover": "assets/images/projects/saved-song/Who Did That.png",
+    "audio": "assets/audio/Who Did That.mp3",
+    "genre": ["K-POP", "ALTERNATIVE POP"],
+    "vocal": "FEMALE VOCAL",
+    "character": ["Playful", "Addictive", "Bold"],
+    "year": 2026,
+    "featured": true,
+    "order": 3
+  },
+  {
+    "id": "you-dont-know-me-like-that",
+    "title": "You don't know me like that",
+    "cover": "assets/images/projects/saved-song/You don't know me like that.png",
+    "audio": "assets/audio/You don't know me like that.mp3",
+    "genre": ["ALT POP"],
+    "vocal": "FEMALE VOCAL",
+    "character": ["Cool", "Detached", "Attitude"],
+    "year": 2026,
+    "featured": true,
+    "order": 4
+  }
+]
