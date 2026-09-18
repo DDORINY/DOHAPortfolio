@@ -33,7 +33,7 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('.release-social-grid img').count(),9);
    assert.deepEqual(await page.locator('.release-social-grid img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),["01-offbeat-brand.png","02-release-001.png","03-saved-song.png","04-lyric.png","05-cover-art.png","06-late-night.png","07-sound.png","08-moment.png","09-still-here.png"]);
    assert.equal(await page.locator('.side-project').count(),0);
-   assert.equal(await page.locator('.offbeat img').count(),16);
+   assert.equal(await page.locator('.offbeat img').count(),12 + tracks.length);
    assert.equal(/Digital Music Curation|MOOD DROP|AFTER MIDNIGHT|ONE ARTIST|IF YOU LIKE|TOO MUCH MUSIC/i.test(await page.locator('.offbeat').allTextContents().then(es=>es.join(' '))),false);
    assert.deepEqual(await page.locator('.commercial-flow h3').allTextContents(),['PRODUCT','INFORMATION','VISUAL','CAMPAIGN','ADAPTATION']);
    assert.deepEqual(await page.locator('.commercial-features dt').allTextContents(),['MOISTURE','LIGHT TEXTURE','DAILY ROUTINE']);
@@ -58,8 +58,8 @@ const server = http.createServer((req,res) => {
    assert.deepEqual(await page.locator('.portfolio-section > .section-inner > .eyebrow').allTextContents().then(es=>es.map(e=>e.split(' / ')[0])),Array.from({length:13},(_,i)=>String(i+1).padStart(2,'0')));
    assert.deepEqual(await page.locator('.track-card h3').allTextContents(),renderedTracks.map(track=>track.title));
    assert.deepEqual(await page.locator('.track-number').allTextContents(),renderedTracks.map(track=>`${String(trackPositions.get(track.id)).padStart(2,'0')} / SINGLE`));
-   assert.deepEqual(await page.locator('.track-meta').allTextContents(),renderedTracks.map(track=>[...track.genre,track.vocal].join(' · ')));
-   assert.deepEqual(await page.locator('.track-character').allTextContents(),renderedTracks.map(track=>track.character.join(' · ')));
+   assert.deepEqual(await page.locator('.track-meta').allTextContents(),renderedTracks.map(track=>[...track.genre,track.vocal].filter(Boolean).join(' · ')).filter(Boolean));
+   assert.deepEqual(await page.locator('.track-character').allTextContents(),renderedTracks.map(track=>track.character.join(' · ')).filter(Boolean));
    assert.equal(await page.locator('.track-card .track-role').count(),0);
    assert.equal(await page.locator('.track-shared-role').count(),1);
    assert.equal(await page.locator('.track-player>p').count(),0);
@@ -88,7 +88,7 @@ const server = http.createServer((req,res) => {
      await audio.evaluate(e=>e.pause());
      assert.equal(await audio.evaluate(e=>e.paused&&!e.error),true);
      assert.equal(await audio.getAttribute('aria-label'),`Listen to ${track.title}`);
-     const order=await card.evaluate(e=>['.track-artwork','h3','.track-meta','.track-character','.track-player'].map(s=>e.querySelector(s).getBoundingClientRect().top));
+     const order=await card.evaluate(e=>['.track-artwork','h3','.track-meta','.track-character','.track-player'].map(s=>e.querySelector(s)).filter(Boolean).map(el=>el.getBoundingClientRect().top));
      assert.equal(order.every((y,j)=>j===0||y>=order[j-1]),true);
    }
    const missingAria=await page.locator('[aria-labelledby],[aria-controls]').evaluateAll(es=>es.flatMap(e=>['aria-labelledby','aria-controls'].flatMap(a=>(e.getAttribute(a)||'').split(/\s+/).filter(Boolean))).filter(id=>!document.getElementById(id)));assert.deepEqual(missingAria,[]);

@@ -31,15 +31,16 @@ function validateTracks(input, { checkAssets = true, root = ROOT } = {}) {
   input.forEach((track, index) => {
     const at = `track ${index + 1}`;
     if (!track || typeof track !== 'object' || Array.isArray(track)) fail(`${at} must be an object`);
-    for (const field of ['id', 'title', 'cover', 'audio', 'vocal']) if (!isNonEmptyString(track[field])) fail(`${at}.${field} is required`);
+    for (const field of ['id', 'title', 'cover', 'audio']) if (!isNonEmptyString(track[field])) fail(`${at}.${field} is required`);
+    if (typeof track.vocal !== 'string') fail(`${at}.vocal must be a string (empty when unknown)`);
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(track.id)) fail(`${at}.id must be a stable lowercase kebab-case id`);
     if (ids.has(track.id)) fail(`duplicate id: ${track.id}`); ids.add(track.id);
     if (!Number.isInteger(track.order) || track.order < 1) fail(`${at}.order must be a positive integer`);
     if (orders.has(track.order)) fail(`duplicate order: ${track.order}`); orders.add(track.order);
     if (!Number.isInteger(track.year) || track.year < 1900 || track.year > 9999) fail(`${at}.year must be a four-digit integer`);
     if (typeof track.featured !== 'boolean') fail(`${at}.featured must be boolean`);
-    if (!Array.isArray(track.genre) || track.genre.length === 0 || track.genre.some(value => !isNonEmptyString(value))) fail(`${at}.genre must be a non-empty string array`);
-    if (!Array.isArray(track.character) || track.character.length !== 3 || track.character.some(value => !isNonEmptyString(value))) fail(`${at}.character must contain exactly three strings`);
+    if (!Array.isArray(track.genre) || track.genre.some(value => !isNonEmptyString(value))) fail(`${at}.genre must be a string array`);
+    if (!Array.isArray(track.character) || ![0, 3].includes(track.character.length) || track.character.some(value => !isNonEmptyString(value))) fail(`${at}.character must contain zero or three strings`);
     if (checkAssets) {
       assertCaseSensitiveFile(track.cover, '.png', root);
       assertCaseSensitiveFile(track.audio, '.mp3', root);
@@ -76,13 +77,13 @@ function selectTracks(sortedTracks) {
 function renderCard(track, position) {
   const title = escapeText(track.title);
   const titleAttribute = escapeAttribute(track.title);
-  const metadata = [...track.genre, track.vocal].map(escapeText).join(' · ');
+  const metadata = [...track.genre, track.vocal].filter(Boolean).map(escapeText).join(' · ');
   const character = track.character.map(escapeText).join(' · ');
   const titleId = `track-title-${escapeAttribute(track.id)}`;
   return `<article class="track-card" aria-labelledby="${titleId}">
 <p class="track-number">${padCount(position)} / SINGLE</p>
 <figure class="track-artwork"><img src="${escapeAttribute(track.cover)}" width="1254" height="1254" loading="lazy" decoding="async" alt="${titleAttribute} 커버 아트워크"></figure>
-<div class="track-content"><h3 id="${titleId}">${title}</h3><p class="track-meta">${metadata}</p><p class="track-character">${character}</p><div class="track-player"><audio controls preload="metadata" aria-label="Listen to ${titleAttribute}"><source src="${escapeAttribute(track.audio)}" type="audio/mpeg">이 브라우저는 오디오 재생을 지원하지 않습니다. <a href="${escapeAttribute(track.audio)}">음원 파일 열기</a></audio></div></div>
+<div class="track-content"><h3 id="${titleId}">${title}</h3>${metadata ? `<p class="track-meta">${metadata}</p>` : ''}${character ? `<p class="track-character">${character}</p>` : ''}<div class="track-player"><audio controls preload="metadata" aria-label="Listen to ${titleAttribute}"><source src="${escapeAttribute(track.audio)}" type="audio/mpeg">이 브라우저는 오디오 재생을 지원하지 않습니다. <a href="${escapeAttribute(track.audio)}">음원 파일 열기</a></audio></div></div>
 </article>`;
 }
 
@@ -153,6 +154,14 @@ function runFixtureTests() {
   assert.match(escapedMarkup,/Quote &quot; &amp; &lt;한글&gt;&#39; 커버 아트워크/);
   assert.match(escapedMarkup,/Quote " &amp; &lt;한글&gt;'/);
   assert.throws(()=>validateTracks([...fixtureTracks(1),...fixtureTracks(1)],{checkAssets:false}),/duplicate id/);
+  const unknown = fixtureTracks(1);
+  Object.assign(unknown[0], { genre: [], vocal: '', character: [] });
+  validateTracks(unknown, { checkAssets: false });
+  const unknownMarkup = renderGeneratedBlock(unknown);
+  assert.equal(unknownMarkup.includes('class="track-meta"'), false);
+  assert.equal(unknownMarkup.includes('class="track-character"'), false);
+  assert.equal(unknownMarkup.includes('<audio controls'), true);
+  assert.throws(()=>validateTracks([{ ...unknown[0], character: ['Unconfirmed'] }],{checkAssets:false}),/zero or three/);
   return results;
 }
 

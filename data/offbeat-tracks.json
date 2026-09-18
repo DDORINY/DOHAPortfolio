@@ -4,9 +4,16 @@
     "title": "I Can Read You",
     "cover": "assets/images/projects/saved-song/I Can Read You.png",
     "audio": "assets/audio/I Can Read You.mp3",
-    "genre": ["ALT POP", "ALT R&B"],
+    "genre": [
+      "ALT POP",
+      "ALT R&B"
+    ],
     "vocal": "FEMALE VOCAL",
-    "character": ["Dreamy", "Surreal", "Intuitive"],
+    "character": [
+      "Dreamy",
+      "Surreal",
+      "Intuitive"
+    ],
     "year": 2026,
     "featured": true,
     "order": 1
@@ -16,9 +23,15 @@
     "title": "Stay on the line",
     "cover": "assets/images/projects/saved-song/Stay on the line.png",
     "audio": "assets/audio/Stay on the line.mp3",
-    "genre": ["ALTERNATIVE POP"],
+    "genre": [
+      "ALTERNATIVE POP"
+    ],
     "vocal": "FEMALE VOCAL",
-    "character": ["Dreamy", "Emotional", "Late Night"],
+    "character": [
+      "Dreamy",
+      "Emotional",
+      "Late Night"
+    ],
     "year": 2026,
     "featured": true,
     "order": 2
@@ -28,9 +41,16 @@
     "title": "Who Did That",
     "cover": "assets/images/projects/saved-song/Who Did That.png",
     "audio": "assets/audio/Who Did That.mp3",
-    "genre": ["K-POP", "ALTERNATIVE POP"],
+    "genre": [
+      "K-POP",
+      "ALTERNATIVE POP"
+    ],
     "vocal": "FEMALE VOCAL",
-    "character": ["Playful", "Addictive", "Bold"],
+    "character": [
+      "Playful",
+      "Addictive",
+      "Bold"
+    ],
     "year": 2026,
     "featured": true,
     "order": 3
@@ -40,11 +60,101 @@
     "title": "You don't know me like that",
     "cover": "assets/images/projects/saved-song/You don't know me like that.png",
     "audio": "assets/audio/You don't know me like that.mp3",
-    "genre": ["ALT POP"],
+    "genre": [
+      "ALT POP"
+    ],
     "vocal": "FEMALE VOCAL",
-    "character": ["Cool", "Detached", "Attitude"],
+    "character": [
+      "Cool",
+      "Detached",
+      "Attitude"
+    ],
     "year": 2026,
     "featured": true,
     "order": 4
+  },
+  {
+    "id": "eyes-up-down-low",
+    "title": "Eyes Up, Down Low",
+    "cover": "assets/images/projects/saved-song/Eyes Up, Down Low.png",
+    "audio": "assets/audio/Eyes Up, Down Low.mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 5
+  },
+  {
+    "id": "twinkle-error",
+    "title": "TWINKLE ERROR",
+    "cover": "assets/images/projects/saved-song/TWINKLE ERROR.png",
+    "audio": "assets/audio/TWINKLE ERROR.mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 6
+  },
+  {
+    "id": "why-not-me",
+    "title": "Why Not Me",
+    "cover": "assets/images/projects/saved-song/Why Not Me.png",
+    "audio": "assets/audio/Why Not Me.mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 7
+  },
+  {
+    "id": "what-are-you-looking-at",
+    "title": "다들 뭐 봐?",
+    "cover": "assets/images/projects/saved-song/다들뭐봐.png",
+    "audio": "assets/audio/다들 뭐 봐_.mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 8
+  },
+  {
+    "id": "cross-the-line",
+    "title": "선을 그어",
+    "cover": "assets/images/projects/saved-song/CrossTheLine.png",
+    "audio": "assets/audio/선을 그어 (Lead Vocal).mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 9
+  },
+  {
+    "id": "just-a-minute",
+    "title": "잠깐만 (Just a Minute)",
+    "cover": "assets/images/projects/saved-song/Just a minute.png",
+    "audio": "assets/audio/잠깐만 (Just a Minute).mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 10
+  },
+  {
+    "id": "when-drunk",
+    "title": "취하면",
+    "cover": "assets/images/projects/saved-song/취하면.png",
+    "audio": "assets/audio/취하면.mp3",
+    "genre": [],
+    "vocal": "",
+    "character": [],
+    "year": 2026,
+    "featured": false,
+    "order": 11
   }
 ]
