@@ -1,11 +1,62 @@
 # Foundation validation
 
-## Current planning note — documentation only
-Latest definition: OFFBEAT = Original Music Release & Content Brand;
-RELEASE 001 = Saved Song. See offbeat-release-system.md.
-The log below is Previous Direction / historical implementation evidence, including
-curation-era expectations and the independent Side Project. It is not the new planning specification.
-HTML/CSS/JS, media and validate-foundation.cjs expectations are unchanged in this document-only task.
+## NOIR FORM — Small-mobile enlargement guidance (2026-09-19)
+
+- Added one muted line directly above the product-detail tools: “확대해서 상세 디자인을 살펴보세요.”
+- Guidance is visible only at viewport widths 390px and below. Desktop layout and all original images remain unchanged.
+- Kept the existing 820px in-place enlargement, horizontal scrolling, return-to-full-width control and original-image link.
+- Campaign applications retain their existing original-view link without adding another button or prompt.
+- Full validate-foundation.cjs regression — PASS at 1920 / 1440 / 1024 / 768 / 390 / 320.
+- Guidance visibility, 390/320 image/button readability and layout screenshots, keyboard enlargement/scroll/reset — PASS.
+- OFFBEAT generation check/self-tests, original markup/92-asset preservation, HTML/local-reference checks, JS syntax and git diff checks — PASS.
+- Local visual review artifacts remain available but are excluded from Git through .gitignore.
+
+## NOIR FORM — Outcome hierarchy / density refinement (2026-09-19)
+
+- Compared full portfolio renders at 1440×900 and 390×844 before editing and after final implementation.
+- 09 retains the dark Hero → Product/Silhouette → Detail/Fabric editorial composition; removed separate Fit/Styling board 06 and added a short commerce transition.
+- 10 shows only final page 16 → campaign applications 17 → subordinate closing model 10.
+- Replaced the side explanation column/outline with a compact header above the main product-detail outcome.
+- Main page max-width 1240px; campaign applications 1120px; desktop closing model 280px.
+- Mobile primary/secondary outcomes use viewport width; the detail expands in place to 820px with horizontal scrolling inside its own viewport. No duplicated image.
+- Section heights, default unexpanded state, all images decoded:
+  - Desktop 1440×900: 09 5157.78 → 4293.94px; 10 4642.19 → 5430.14px.
+  - Mobile 390×844: 09 4665.69 → 3920.84px; 10 3477.58 → 3004.63px.
+- Main page rendered width: desktop 744.20 → 1238.00px; mobile 345.22 → 388.02px.
+- Other 13 sections: actual heights unchanged; protected markup and all original 92 assets preserved.
+- Current eight images: 01-hero, 02-product, 03-silhouette, 04-detail, 05-fabric, 16-commerce-page-final, 17-campaign-applications, 10-campaign-model (PNG).
+- Chromium responsive regression at 1920 / 1440 / 1024 / 768 / 390 / 320 — PASS.
+- Mobile enlargement toggle/ARIA, keyboard horizontal scroll, reset, whole-document width, JS-disabled fallback — PASS.
+- Exact image paths/case, successful decode, natural ratios, heading/navigation/section order, existing audio/MORU/AI regression — PASS.
+- No overflow, content clipping, navigation overlap, failed requests or runtime errors at tested widths.
+- HTML nesting/local references/IDs, JS syntax, browser CSS declaration checks and git diff --check — PASS.
+- Full renders, section/region captures and measurements saved in review-artifacts/noir-form/density-before/ and density-final/.
+- Full cross-browser/screen-reader audit and performance benchmarks not run. No commit, push or deployment.
+
+## NOIR FORM — Fashion Commerce integration (2026-09-19)
+
+- Reviewed all current HTML sections, shared tokens, layered CSS, Vanilla JS navigation/reveal/audio and 1024/720 breakpoints before implementation.
+- Added sections 09 NOIR FORM / 10 Fashion Commerce after both MORU sections; 15 total sections.
+- Nine selected images at their exact original nested paths; actual dimensions recorded in [NOIR FORM Case](noir-form-case.md).
+- Black introduction / asymmetric product and detail grids / fit split / ivory commerce outcomes / final model visual.
+- Final long-form page and campaign applications explicitly marked FINAL DELIVERABLE, with accessible original-image links.
+- Existing 13 section markup blocks unchanged after normalizing the five authorized section/project eyebrow renumberings.
+- SHA256 comparison: all 92 original image/audio/meta assets, including the entire NOIR FORM set, unchanged.
+- Chromium: 1920×1080 / 1440×900 / 1024×768 / 768×1024 / 390×844 / 320×720 — PASS.
+- Exact image filenames/case, successful decode, actual width/height, natural aspect ratios and contain fit — PASS.
+- Split/grid breakpoints, product/detail size contrast, mobile 15-column navigation, section order/numbering/active state — PASS.
+- Horizontal overflow, content outside sections, desktop navigation overlap, runtime/request errors — none.
+- Existing OFFBEAT 11-track archive, audio play/pause, MORU and AI Creative regression checks — PASS.
+- Keyboard skip link/focus, direct section URL, reduced motion, JavaScript-disabled content — PASS.
+- HTML nesting, duplicate attributes/IDs, local references and fragment links; browser CSS declarations; JS syntax; git diff --check — PASS.
+- Desktop/mobile introduction, key visual, product, detail, fit, commerce, applications and final captured at review-artifacts/noir-form/.
+- Visual inspection included desktop product/applications/final and mobile introduction/key visual/commerce, plus portfolio context with fixed chrome.
+- Full cross-browser and screen-reader audits and quantified performance benchmarks were not performed.
+- No commit, push, reset, checkout, clean, asset rename/conversion/compression or deployment.
+
+## Historical implementation records
+The entries below describe earlier states, including previous planning directions and section counts.
+The current live structure is recorded above and in project-plan.md.
 
 ## Baseline
 - START HEAD: `1e58e9a5134eb17223fcbc30bba5c94811184d2b`
@@ -35,8 +86,11 @@ HTML/CSS/JS, media and validate-foundation.cjs expectations are unchanged in thi
 Use `node validate-foundation.cjs` if Playwright resolves normally; otherwise set
 `PLAYWRIGHT_MODULE` to an existing Playwright module directory before running.
 It serves only this local project on 127.0.0.1:8000, opens a temporary headless browser,
-saves review screenshots under TEMP and closes its browser and server afterward.
+saves existing review screenshots under TEMP and NOIR FORM captures under
+review-artifacts/noir-form/, then closes its browser and server afterward.
 No project dependency or lockfile was added.
+For clean NOIR FORM layout captures and portfolio context, run
+`node scripts/render-noir-review.cjs` with the same Playwright configuration.
 
 ## Limits
 HTML checks use Python's parser rather than a full HTML conformance validator.

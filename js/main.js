@@ -1,5 +1,18 @@
 const sections = [...document.querySelectorAll('.portfolio-section')];
 const navList = document.querySelector('#section-nav-list');
+navList.style.setProperty('--section-count', sections.length);
+
+const detailToggle = document.querySelector('.noir-detail-toggle');
+const detailViewport = document.querySelector('#noir-detail-viewport');
+if (detailToggle && detailViewport) {
+  detailToggle.hidden = false;
+  detailToggle.addEventListener('click', () => {
+    const expanded = detailViewport.classList.toggle('is-expanded');
+    detailToggle.setAttribute('aria-pressed', String(expanded));
+    detailToggle.textContent = expanded ? '전체 폭으로 보기' : '상세페이지 확대';
+    if (!expanded) detailViewport.scrollLeft = 0;
+  });
+}
 
 sections.forEach((section, index) => {
   const item = document.createElement('li');

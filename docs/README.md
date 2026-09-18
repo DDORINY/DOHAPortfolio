@@ -1,12 +1,12 @@
 # KIM DOHA — Content Planning Portfolio
 콘텐츠 기획 · 비주얼 제작 · AI Creative를 연결하는 개인 포트폴리오의 기반입니다.
 현재 문서의 Project 01 정의는 OFFBEAT — Original Music Release & Content Brand입니다.
-RELEASE 001은 저장한 노래입니다. 웹 화면은 이전 구조를 유지하며 문서만 먼저 변경했습니다.
-RELEASE 001의 커버·MP3는 존재하며, 추가 Release Campaign 자산은 제작 계획입니다.
+RELEASE 001은 저장한 노래이며, OFFBEAT 브랜드·Release Campaign·11곡의 아카이브를 연결했습니다.
+MORU 다음에는 NOIR FORM — Fashion Commerce / F/W 2026 케이스가 배치됩니다.
 성과나 작업물을 임의로 생성하지 않습니다.
 
 ## 구조
-- index.html: 12개 의미론적 섹션
+- index.html: 15개 의미론적 섹션
 - css/reset.css: 기존 reset 유지
 - css/variables.css: 색상, 서체, 간격, 모션 토큰
 - css/style.css: 기존 full-page 기반, header, navigation, reveal
@@ -14,6 +14,7 @@ RELEASE 001의 커버·MP3는 존재하며, 추가 Release Campaign 자산은 �
 - css/master-asset.css: 향후 실제 이미지 표시
 - css/side-project.css: 저장한 노래 전용 스타일 (메인 테마와 분리)
 - css/responsive.css: 1024px / 720px 반응형 및 reduced motion
+- css/noir-form.css: NOIR FORM 전용 패션 에디토리얼과 커머스 결과물
 - js/main.js: 섹션 번호 자동 생성, 현재 위치, reveal, 이미지 fallback
 - css/key-visual.css, palette.css, cleanup.css: 역할 통합 후 비활성화
 
@@ -23,6 +24,7 @@ http://127.0.0.1:8000 에서 확인합니다.
 
 ## 관련 문서
 - [작업 계획](project-plan.md)
+- [NOIR FORM — Fashion Commerce](noir-form-case.md)
 - [OFFBEAT Release System — 최신 기획](offbeat-release-system.md)
 - [RELEASE 001 — 저장한 노래 및 기존 Side Project 기록](side-project-music.md)
 - [누적 검증 기록](validation.md)

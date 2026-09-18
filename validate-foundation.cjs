@@ -53,9 +53,45 @@ const server = http.createServer((req,res) => {
    assert.deepEqual(await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),['01-initial.png','02-revision.png','03-final.png']);
    assert.equal(/CASE IN PROGRESS|placeholder|Content coming/i.test(await page.locator('#project-ai-detail').textContent()),false);
    const ids=await page.locator('.portfolio-section').evaluateAll(s=>s.map(e=>e.id));
-   assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','offbeat-tracks','project-operation','project-operation-detail','project-ai','project-ai-detail','process','toolkit','contact']);
-   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','OFFBEAT TRACKS','MORU','Commercial Case','AI Creative','AI Case','Process','Toolkit','Contact']);
-   assert.deepEqual(await page.locator('.portfolio-section > .section-inner > .eyebrow').allTextContents().then(es=>es.map(e=>e.split(' / ')[0])),Array.from({length:13},(_,i)=>String(i+1).padStart(2,'0')));
+   assert.deepEqual(ids,['cover','about','experience','project-digital','project-digital-detail','offbeat-tracks','project-operation','project-operation-detail','project-fashion','project-fashion-detail','project-ai','project-ai-detail','process','toolkit','contact']);
+   assert.deepEqual(await page.locator('.portfolio-section').evaluateAll(es=>es.map(e=>e.dataset.label)),['Cover','About','Experience','OFFBEAT','RELEASE 001','OFFBEAT TRACKS','MORU','Commercial Case','NOIR FORM','Fashion Commerce','AI Creative','AI Case','Process','Toolkit','Contact']);
+   assert.deepEqual(await page.locator('.portfolio-section > .section-inner > .eyebrow').allTextContents().then(es=>es.map(e=>e.split(' / ')[0])),Array.from({length:15},(_,i)=>String(i+1).padStart(2,'0')));
+   assert.deepEqual(await page.locator('[data-noir-slot]').evaluateAll(es=>es.map(e=>e.dataset.noirSlot)),['key-visual','product','silhouette','detail','fabric','commerce-final','campaign-applications','final-visual']);
+   assert.deepEqual(await page.locator('.noir-visual img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),['01-hero.png','02-product.png','03-silhouette.png','04-detail.png','05-fabric.png','16-commerce-page-final.png','17-campaign-applications.png','10-campaign-model.png']);
+   for(const img of await page.locator('.noir-visual img').all()){
+     const src=await img.getAttribute('src');
+     let current=root;
+     for(const part of src.split('/')){assert.equal(fs.readdirSync(current).includes(part),true,src);current=path.join(current,part);}
+     await img.scrollIntoViewIfNeeded();await img.evaluate(e=>e.decode());
+     assert.equal(await img.evaluate(e=>e.naturalWidth>0&&Number(e.getAttribute('width'))===e.naturalWidth&&Number(e.getAttribute('height'))===e.naturalHeight&&Math.abs(e.getBoundingClientRect().width/e.getBoundingClientRect().height-e.naturalWidth/e.naturalHeight)<.02&&getComputedStyle(e).objectFit==='contain'&&!!e.alt),true,src);
+   }
+   for(const selector of ['.noir-key-visual','.noir-result-copy','.noir-final-visual'])assert.equal(await page.locator(selector).evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?2:1);
+   const productWidths=await page.locator('.noir-product-grid img').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().width));
+   assert.equal(productWidths[1]>productWidths[0],true);
+   const detailWidths=await page.locator('.noir-detail-grid img').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().width));
+   assert.equal(detailWidths[0]>detailWidths[1],true);
+   assert.equal(await page.locator('#project-fashion-detail img').count(),3);
+   assert.equal(await page.locator('.noir-detail-hint').isVisible(),width<=390);
+   const finalPageWidth=await page.locator('.noir-final-page img').evaluate(e=>e.getBoundingClientRect().width);
+   const moruDetailWidth=await page.locator('.commercial-detail img').evaluate(e=>e.getBoundingClientRect().width);
+   const closingWidth=await page.locator('.noir-final-visual img').evaluate(e=>e.getBoundingClientRect().width);
+   assert.equal(width>1024||width<=720 ? finalPageWidth>moruDetailWidth : finalPageWidth>=moruDetailWidth-2,true);
+   assert.equal(finalPageWidth>closingWidth*1.8,true);
+   if(width<=720){
+     assert.equal(finalPageWidth>=width-4,true);
+     const toggle=page.locator('.noir-detail-toggle'),viewport=page.locator('#noir-detail-viewport');
+     await toggle.focus();await page.keyboard.press('Enter');
+     assert.equal(await toggle.getAttribute('aria-pressed'),'true');
+     assert.equal(await viewport.evaluate(e=>e.scrollWidth>=820&&e.scrollWidth>e.clientWidth),true);
+     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+     await viewport.focus();await page.keyboard.press('ArrowRight');await page.waitForTimeout(200);
+     assert.equal(await viewport.evaluate(e=>e.scrollLeft>0),true);
+     await toggle.click();assert.equal(await toggle.getAttribute('aria-pressed'),'false');
+     assert.equal(await viewport.evaluate(e=>e.scrollLeft),0);
+     if([390,320].includes(width))await page.locator('.noir-commerce-result').screenshot({path:path.join(process.env.TEMP,`noir-mobile-guidance-${width}.png`),style:'.site-header,.section-nav,.skip-link{visibility:hidden!important}'});
+   }
+   for(const link of await page.locator('.noir-text-link[target="_blank"]').all())assert.equal(fs.existsSync(path.join(root,await link.getAttribute('href'))),true);
+   if(width<=720)assert.equal(await page.locator('.section-nav ol').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),15);
    assert.deepEqual(await page.locator('.track-card h3').allTextContents(),renderedTracks.map(track=>track.title));
    assert.deepEqual(await page.locator('.track-number').allTextContents(),renderedTracks.map(track=>`${String(trackPositions.get(track.id)).padStart(2,'0')} / SINGLE`));
    assert.deepEqual(await page.locator('.track-meta').allTextContents(),renderedTracks.map(track=>[...track.genre,track.vocal].filter(Boolean).join(' · ')).filter(Boolean));
@@ -102,8 +138,8 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('#saved-song audio').count(),1);
    assert.equal(await page.locator('#saved-song audio').getAttribute('preload'),'metadata');
    assert.equal(await page.locator('#saved-song audio').evaluate(e=>e.paused && !e.autoplay && !e.loop),true);
-   assert.equal(new Set(ids).size,13);
-   assert.equal(await page.locator('.section-nav a').count(),13);
+   assert.equal(new Set(ids).size,15);
+   assert.equal(await page.locator('.section-nav a').count(),15);
    const duplicateIds=await page.locator('[id]').evaluateAll(es=>es.map(e=>e.id).filter((id,i,arr)=>arr.indexOf(id)!==i));assert.deepEqual(duplicateIds,[]);
    const broken=await page.locator('[href],[src]').evaluateAll(es=>es.flatMap(e=>['href','src'].filter(a=>e.hasAttribute(a)).map(a=>e.getAttribute(a))).filter(s=>s.startsWith('#')&&!document.getElementById(s.slice(1))));assert.deepEqual(broken,[]);
    for(const id of ids) {
@@ -195,7 +231,13 @@ const server = http.createServer((req,res) => {
    await page.locator('a[href="#cover"]').last().click();
    await page.waitForFunction(()=>document.querySelector('.section-nav a[aria-current]')?.hash==='#cover');
    await page.screenshot({path:`${process.env.TEMP}/portfolio-${width}.png`});
-   results.push({width,height,sections:13,overflow:0,errors});
+   if([1440,390].includes(width)){
+     const qaDir=path.join(root,'review-artifacts','noir-form');fs.mkdirSync(qaDir,{recursive:true});
+     for(const [name,selector] of [['introduction','.noir-masthead'],['key-visual','.noir-key-visual'],['product','.noir-product-story'],['detail','.noir-detail-story'],['commerce','.noir-commerce-result'],['applications','.noir-applications'],['final','.noir-final-visual']]){
+       await page.locator(selector).screenshot({path:path.join(qaDir,`${width}-${name}.png`),style:'.site-header,.section-nav,.skip-link{visibility:hidden!important}'});
+     }
+   }
+   results.push({width,height,sections:15,noirImages:8,overflow:0,errors});
    await page.close();
   }
   const page=await browser.newPage({viewport:{width:390,height:844}});
@@ -208,6 +250,11 @@ const server = http.createServer((req,res) => {
   await page.goto('http://127.0.0.1:8000/#project-operation-detail');
   await page.waitForFunction(()=>document.querySelector('#project-operation-detail').classList.contains('is-visible') && getComputedStyle(document.querySelector('#project-operation-detail .reveal')).opacity==='1');
   assert.equal(await page.locator('#project-operation-detail .reveal').first().evaluate(e=>getComputedStyle(e).opacity),'1');
+  await page.goto('http://127.0.0.1:8000/#project-fashion-detail');
+  await page.waitForFunction(()=>document.querySelector('.section-nav a[aria-current]')?.hash==='#project-fashion-detail');
+  assert.equal(await page.locator('.section-nav a[href="#project-fashion-detail"]').getAttribute('aria-label'),'10. Fashion Commerce');
+  await page.locator('.noir-commerce-result .noir-text-link').focus();
+  assert.equal(await page.evaluate(()=>document.activeElement.className),'noir-text-link');
   await page.goto('http://127.0.0.1:8000/#saved-song');
   assert.equal(await page.locator('#saved-song').isVisible(),true);
   assert.equal(await page.locator('#saved-song').evaluate(e=>getComputedStyle(e).opacity),'1');
@@ -216,6 +263,9 @@ const server = http.createServer((req,res) => {
   assert.equal(await plain.locator('#saved-song').evaluate(e=>getComputedStyle(e).opacity),'1');
   assert.equal(await plain.locator('.track-card').count(),tracks.length);
   assert.deepEqual(await plain.locator('.track-grid-primary .track-card h3').allTextContents(),trackSelection.primary.map(track=>track.title));
+  assert.equal(await plain.locator('.noir-visual img').count(),8);
+  assert.equal(await plain.locator('.noir-detail-toggle').isVisible(),false);
+  assert.equal(await plain.locator('.noir-output-heading').evaluate(e=>getComputedStyle(e).opacity),'1');
 
   const cssValidation=await page.evaluate(async()=>{
     function separatePriority(rawValue) {

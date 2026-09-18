@@ -1,4 +1,14 @@
 # Asset Map — OFFBEAT Release System
+## NOIR FORM — Fashion Commerce / F/W 2026
+
+MORU 다음 09·10 섹션에 사용자 제공 이미지 8개를 연결했습니다.
+공통 실제 경로: `assets/images/projects/NOIR_FORM_images/NOIR_FORM_images/`.
+01-hero / 02-product / 03-silhouette / 04-detail / 05-fabric /
+16-commerce-page-final / 17-campaign-applications / 10-campaign-model (모두 PNG).
+치수와 역할은 [NOIR FORM Case](../docs/noir-form-case.md)의 이미지 표를 참고합니다.
+별도 Fit/Styling 보드 06과 중간 상세페이지 버전 13·14·15를 포함한 나머지 원본도 보존했습니다.
+원본 rename / move / copy / 변환 / 재압축은 하지 않았습니다.
+
 최신 기획: [OFFBEAT Release System](../docs/offbeat-release-system.md).
 기존 실제 파일을 원래 경로로 웹에 연결했습니다. rename / duplicate copy / 변환 / 재압축은 없습니다.
 
