@@ -20,4 +20,4 @@
    node validate-foundation.cjs
    ```
 
-8곡까지는 모든 곡이 표시됩니다. 9곡부터는 `featured: true`인 곡을 `order` 순으로 우선 선택해 6곡을 기본 표시하며, 부족한 자리는 나머지 곡의 `order` 순으로 채웁니다. 그 밖의 곡은 JavaScript 없이 작동하는 **View All Tracks** 영역에 표시됩니다.
+8곡까지는 모든 곡이 표시됩니다. 9곡부터는 `featured: true`인 곡을 `order` 순으로 우선 선택해 3곡을 기본 표시하며, 부족한 자리는 나머지 곡의 `order` 순으로 채웁니다. 그 밖의 곡은 JavaScript 없이 작동하는 **View All Tracks** 영역에 표시됩니다.

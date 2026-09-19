@@ -63,11 +63,11 @@ function padCount(value) { return String(value).padStart(2, '0'); }
 function selectTracks(sortedTracks) {
   if (sortedTracks.length <= 8) return { primary: sortedTracks, remaining: [] };
   const featured = sortedTracks.filter(track => track.featured);
-  const primary = featured.slice(0, 6);
-  if (primary.length < 6) {
+  const primary = featured.slice(0, 3);
+  if (primary.length < 3) {
     for (const track of sortedTracks) {
       if (!primary.includes(track)) primary.push(track);
-      if (primary.length === 6) break;
+      if (primary.length === 3) break;
     }
   }
   const selectedIds = new Set(primary.map(track => track.id));
@@ -140,15 +140,15 @@ function runFixtureTests() {
   const results = [];
   for (const count of [4, 5, 8, 9, 12, 20]) {
     const tracks = validateTracks(fixtureTracks(count), { checkAssets: false }), selection = selectTracks(tracks), html = renderGeneratedBlock(tracks);
-    const expectedPrimary = count <= 8 ? count : 6, expectedRemaining = count <= 8 ? 0 : count - 6;
+    const expectedPrimary = count <= 8 ? count : 3, expectedRemaining = count <= 8 ? 0 : count - 3;
     assert.equal(selection.primary.length, expectedPrimary); assert.equal(selection.remaining.length, expectedRemaining);
     assert.equal(html.includes('is-expanded-archive'), count >= 5); assert.equal(html.includes('<details'), count >= 9);
     assert.equal((html.match(/class="track-card"/g) || []).length, count);
     assert.equal(new Set([...selection.primary, ...selection.remaining].map(track => track.id)).size, count);
     results.push({ tracks: count, primary: expectedPrimary, remaining: expectedRemaining, columns: count >= 5 ? 3 : 2, details: count >= 9 });
   }
-  assert.deepEqual(selectTracks(validateTracks(fixtureTracks(9), { checkAssets: false })).primary.map(track => track.id),['fixture-1','fixture-3','fixture-5','fixture-7','fixture-9','fixture-2']);
-  assert.deepEqual(selectTracks(validateTracks(fixtureTracks(20), { checkAssets: false })).primary.map(track => track.id),['fixture-1','fixture-3','fixture-5','fixture-7','fixture-9','fixture-11']);
+  assert.deepEqual(selectTracks(validateTracks(fixtureTracks(9), { checkAssets: false })).primary.map(track => track.id),['fixture-1','fixture-3','fixture-5']);
+  assert.deepEqual(selectTracks(validateTracks(fixtureTracks(20), { checkAssets: false })).primary.map(track => track.id),['fixture-1','fixture-3','fixture-5']);
   const escaped = fixtureTracks(1); escaped[0].title = 'Quote " & <한글>\'';
   const escapedMarkup = renderGeneratedBlock(escaped);
   assert.match(escapedMarkup,/Quote &quot; &amp; &lt;한글&gt;&#39; 커버 아트워크/);

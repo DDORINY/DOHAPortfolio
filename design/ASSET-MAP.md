@@ -55,12 +55,13 @@ Audio는 접근 가능한 기존 label과 controls, preload=metadata를 유지�
 | detail | assets/images/projects/moru/detail/moru-calm-barrier-serum-detail.png | 822×1914 | EXISTS / WEB 연결 완료 |
 | desktop | assets/images/projects/moru/campaign/moru-calm-barrier-serum-desktop.png | 1916×821 | EXISTS / WEB 연결 완료 |
 | mobile | assets/images/projects/moru/campaign/moru-calm-barrier-serum-mobile.png | 1122×1402 | EXISTS / WEB 연결 완료 |
-| social-01 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-01.png | 1672×941 | EXISTS / WEB 연결 완료 |
-| social-02 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-02.png | 1254×1254 | EXISTS / WEB 연결 완료 |
-| social-03 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-03.png | 1254×1254 | EXISTS / WEB 연결 완료 |
+| social-01 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-01.png | 1672×941 | EXISTS / 기본 화면 제외 |
+| social-02 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-02.png | 1254×1254 | EXISTS / 기본 화면 제외 |
+| social-03 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-03.png | 1254×1254 | EXISTS / 기본 화면 제외 |
 | story | assets/images/projects/moru/campaign/moru-calm-barrier-serum-story.png | 941×1672 | EXISTS / WEB 연결 완료 |
 
-06: Product Master / Hero. 07: Detail / Desktop / Mobile / Social 01–03 / Story.
+07: Product Master / Hero. 08: Detail / Desktop / Mobile / Story.
+Social 01–03 원본은 유지하며 1차 밀도 최적화에서 기본 화면 노출만 제외했습니다.
 파일명·경로 차이 없음. 예상 규격과 달라 실제 크기를 기록했습니다.
 Social 01 가로형을 포함해 모든 원본 비율을 유지합니다. 신규 이미지 생성·변환·이동·복사 없음.
 

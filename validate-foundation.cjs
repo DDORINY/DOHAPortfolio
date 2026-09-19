@@ -12,7 +12,7 @@ const renderedTracks = [...trackSelection.primary, ...trackSelection.remaining];
 const trackPositions = new Map(tracks.map((track,index)=>[track.id,index+1]));
 const indexHtml = fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.equal(trackArchitecture.markerRegion(indexHtml).current,trackArchitecture.expectedBlock());
-assert.deepEqual(trackArchitecture.runFixtureTests().map(result=>[result.tracks,result.primary,result.remaining,result.columns,result.details]),[[4,4,0,2,false],[5,5,0,3,false],[8,8,0,3,false],[9,6,3,3,true],[12,6,6,3,true],[20,6,14,3,true]]);
+assert.deepEqual(trackArchitecture.runFixtureTests().map(result=>[result.tracks,result.primary,result.remaining,result.columns,result.details]),[[4,4,0,2,false],[5,5,0,3,false],[8,8,0,3,false],[9,3,6,3,true],[12,3,9,3,true],[20,3,17,3,true]]);
 const server = http.createServer((req,res) => {
   const file = path.join(root, decodeURIComponent(req.url.split('?')[0] === '/' ? '/index.html' : req.url.split('?')[0]));
   if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) {res.writeHead(404);res.end();return;}
@@ -31,14 +31,21 @@ const server = http.createServer((req,res) => {
    assert.equal(await page.locator('#project-digital-title').textContent(),'OFFBEAT');
    assert.deepEqual(await page.locator('.release-system h4').allTextContents(),['MUSIC','IDENTITY','VISUAL','CONTENT','RELEASE']);
    assert.equal(await page.locator('.release-social-grid img').count(),9);
-   assert.deepEqual(await page.locator('.release-social-grid img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),["01-offbeat-brand.png","02-release-001.png","03-saved-song.png","04-lyric.png","05-cover-art.png","06-late-night.png","07-sound.png","08-moment.png","09-still-here.png"]);
+   assert.deepEqual(await page.locator('.release-social-grid-primary img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),["04-lyric.png","07-sound.png","09-still-here.png"]);
+   assert.deepEqual(await page.locator('.release-social-grid-more img').evaluateAll(es=>es.map(e=>e.getAttribute('src').split('/').pop())),["01-offbeat-brand.png","02-release-001.png","03-saved-song.png","05-cover-art.png","06-late-night.png","08-moment.png"]);
+   assert.equal(await page.locator('.release-social-grid-primary>li').count(),3);
+   assert.equal(await page.locator('.release-social-grid-more>li').count(),6);
+   assert.equal(await page.locator('.release-social-more').evaluate(e=>!e.open),true);
+   await page.locator('.release-social-more summary').click();
+   assert.equal(await page.locator('.release-social-grid-more').isVisible(),true);
+   await page.locator('.release-social-more summary').click();
    assert.equal(await page.locator('.side-project').count(),0);
    assert.equal(await page.locator('.offbeat img').count(),12 + tracks.length);
    assert.equal(/Digital Music Curation|MOOD DROP|AFTER MIDNIGHT|ONE ARTIST|IF YOU LIKE|TOO MUCH MUSIC/i.test(await page.locator('.offbeat').allTextContents().then(es=>es.join(' '))),false);
    assert.deepEqual(await page.locator('.commercial-flow h3').allTextContents(),['PRODUCT','INFORMATION','VISUAL','CAMPAIGN','ADAPTATION']);
    assert.deepEqual(await page.locator('.commercial-features dt').allTextContents(),['MOISTURE','LIGHT TEXTURE','DAILY ROUTINE']);
    assert.equal(await page.locator('.commercial-asset[hidden]').count(),0);
-   assert.equal(await page.locator('.commercial img').count(),9);
+   assert.equal(await page.locator('.commercial img').count(),6);
    const commercialText=(await page.locator('.commercial').allTextContents()).join(' ');
    assert.match(commercialText,/MORU/);
    assert.match(commercialText,/Concept Product Brand/);
@@ -46,7 +53,9 @@ const server = http.createServer((req,res) => {
    assert.match(commercialText,/WORK EXPERIENCE BASED RECONSTRUCTION/);
    assert.equal((commercialText.match(/VISUAL CASE IN DEVELOPMENT/g)||[]).length,0);
    assert.equal(/MORU L01|Portable Table Light|CORDLESS|USB-C|CASE IN PREPARATION|CONTEXT|RESPOND|IMPROVE|SHARE|CTR|전환율|매출|판매량|할인율/.test(commercialText),false);
-   assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','story','social-01','social-02','social-03']);
+   assert.deepEqual(await page.locator('.commercial-asset').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['master','hero','detail','desktop','mobile','story']);
+   assert.equal(await page.locator('.commercial-social').count(),0);
+   for(const file of ['moru-calm-barrier-serum-social-01.png','moru-calm-barrier-serum-social-02.png','moru-calm-barrier-serum-social-03.png'])assert.equal(fs.existsSync(path.join(root,'assets','images','projects','moru','campaign',file)),true);
    assert.equal(/\d+\s*(?:mAh|lm|kg|시간|원|%)/i.test(commercialText),false);
    assert.deepEqual(await page.locator('.ai-flow h3').allTextContents(),['BRIEF','GENERATE','REVIEW','REFINE','FINAL']);
    assert.deepEqual(await page.locator('.ai-stage').evaluateAll(es=>es.map(e=>e.dataset.contentSlot)),['initial','revision','final']);
@@ -127,6 +136,9 @@ const server = http.createServer((req,res) => {
      const order=await card.evaluate(e=>['.track-artwork','h3','.track-meta','.track-character','.track-player'].map(s=>e.querySelector(s)).filter(Boolean).map(el=>el.getBoundingClientRect().top));
      assert.equal(order.every((y,j)=>j===0||y>=order[j-1]),true);
    }
+   await page.reload();
+   assert.equal(await page.locator('.track-archive-more').evaluate(e=>!e.open),true);
+   assert.equal(await page.locator('.release-social-more').evaluate(e=>!e.open),true);
    const missingAria=await page.locator('[aria-labelledby],[aria-controls]').evaluateAll(es=>es.flatMap(e=>['aria-labelledby','aria-controls'].flatMap(a=>(e.getAttribute(a)||'').split(/\s+/).filter(Boolean))).filter(id=>!document.getElementById(id)));assert.deepEqual(missingAria,[]);
    assert.equal(await page.locator('.portfolio-section[id*="music"]').count(),0);
    assert.equal(await page.locator('#saved-song').count(),1);
@@ -201,11 +213,13 @@ const server = http.createServer((req,res) => {
        if(innerWidth>720&&r.right>nav.left&&r.left<nav.right&&r.bottom>nav.top&&r.top<nav.bottom)errors.push(e.tagName+' nav overlap');
      }return errors;
    });assert.deepEqual(sideIssues,[],width+' saved-song');
-   if([1440,390].includes(width))await page.screenshot({path:`${process.env.TEMP}/saved-song-${width}.png`});
-   for(const img of await page.locator('.offbeat img').all()){
-     await img.scrollIntoViewIfNeeded();
-     await page.waitForFunction(src=>{const e=[...document.images].find(e=>e.getAttribute('src')===src);return e.complete&&e.naturalWidth>0},await img.getAttribute('src'));
-     assert.equal(await img.evaluate(e=>getComputedStyle(e).objectFit==='contain'),true);
+    if([1440,390].includes(width))await page.screenshot({path:`${process.env.TEMP}/saved-song-${width}.png`});
+    for(const img of await page.locator('.offbeat img').all()){
+      if(await img.isVisible()){
+        await img.scrollIntoViewIfNeeded();
+        await page.waitForFunction(src=>{const e=[...document.images].find(e=>e.getAttribute('src')===src);return e.complete&&e.naturalWidth>0},await img.getAttribute('src'));
+      }
+      assert.equal(await img.evaluate(e=>getComputedStyle(e).objectFit==='contain'),true);
      assert.equal((await img.getAttribute('alt')).length>0,true);
    }
    for(const img of await page.locator('.commercial img,.ai-visual img').all()){
@@ -218,9 +232,8 @@ const server = http.createServer((req,res) => {
    for(const id of ['process','toolkit','contact'])assert.equal(await page.locator('#'+id+' .section-inner').evaluate(e=>getComputedStyle(e).minHeight),'0px');
    const aiWidths=await page.locator('.ai-visual img').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().width));
    assert.equal(aiWidths[2]>aiWidths[0]&&aiWidths[2]>aiWidths[1],true);
-   assert.equal(await page.locator('.commercial-social').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
    assert.equal(await page.locator('.release-social-frame').first().evaluate(e=>Math.abs(e.clientWidth-e.clientHeight)<=1),true);
-   assert.equal(await page.locator('.release-social-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
+   assert.equal(await page.locator('.release-social-grid-primary').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>720?3:1);
    if([1440,390].includes(width)){
      await page.locator('.release-social').evaluate(e=>e.scrollIntoView());
      await page.waitForTimeout(100);

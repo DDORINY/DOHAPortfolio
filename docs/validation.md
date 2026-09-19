@@ -396,3 +396,15 @@ No commit, push, reset, clean, checkout, rename or deploy performed.
 - Existing lazy/async/dimension attributes retained; no new content, imagery, dependency or animation.
 - Modified index.html, js/main.js, validate-foundation.cjs and this log; added css/density.css; deleted none.
 - No commit/push/reset/checkout/clean/rename/deploy.
+
+## Portfolio Density Optimization 01 (2026-09-19)
+- START HEAD b6ad7587953b92f6a5e3be143e849f50420ae370; branch main; starting status clean.
+- OFFBEAT Social Campaign defaults to LYRIC / SOUND / CLOSE (3 items); the remaining 6 items are retained in `VIEW FULL CAMPAIGN`.
+- OFFBEAT Selected Tracks defaults to 3 of 11 tracks; the remaining 8 tracks are retained in `VIEW ALL TRACKS` with all audio sources and metadata intact.
+- MORU Social Variations are excluded from the default DOM presentation; the three original image assets remain in place. Product Master, Hero, Long-form Detail, Desktop Campaign, Mobile Content and Story remain visible.
+- Measured at 1440x900: total 33,038 -> 31,351px (-1,687px / -5.11%); OFFBEAT 6,834.01 -> 5,618.30px (-1,215.71px / -17.79%); MORU 6,427.64 -> 5,956.39px (-471.25px / -7.33%).
+- Measured at 390x844: total 35,184 -> 29,890px (-5,294px / -15.05%); OFFBEAT 11,040.64 -> 6,873.28px (-4,167.36px / -37.75%); MORU 5,823.41 -> 4,696.73px (-1,126.68px / -19.35%).
+- Chromium 1920 / 1440 / 1024 / 768 / 390 / 320: PASS; no horizontal overflow, runtime errors, failed local references or navigation regressions.
+- Campaign +06 and Tracks +08 expand/collapse: PASS. Track audio playback/pause: PASS. Keyboard, deep links and no-JavaScript presentation: PASS.
+- Full-page and focused 1440x900 / 390x844 renders inspected; no unintended blank layout space or content collision found.
+- NOIR FORM, AI Creative, Saved Song, How I Work, Toolkit and Contact were not changed.

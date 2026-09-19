@@ -32,7 +32,8 @@ Experience는 회사·기간·역할을 요약하고 Project 02는 업무 방식
   Commercial Content · E-commerce / Work Experience Based Reconstruction.
   MORU는 포트폴리오용 Concept Product Brand입니다.
   Product → Information → Visual → Campaign → Adaptation.
-  07은 Master·Hero·Message, 08은 Detail·Desktop·Mobile·Social 3종·Story의 실제 결과물을 표시합니다.
+  07은 Master·Hero·Message, 08은 Detail·Desktop·Mobile·Story의 실제 결과물을 표시합니다.
+  Social 3종 원본은 보존하며 1차 밀도 최적화에서 기본 화면 노출만 제외했습니다.
   [Content Operation Case](content-operation-case.md)가 최신 Project 02 기준입니다.
 - Project 03: NOIR FORM / Fashion Commerce / F/W 2026.
   Campaign: STRUCTURE IN MOTION. 여성 Structured Long Coat를 중심으로

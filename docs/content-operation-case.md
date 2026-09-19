@@ -32,9 +32,9 @@ PRODUCT → INFORMATION → VISUAL → CAMPAIGN → ADAPTATION.
 | detail | assets/images/projects/moru/detail/moru-calm-barrier-serum-detail.png | 822×1914 | EXISTS / WEB 연결 완료 |
 | desktop | assets/images/projects/moru/campaign/moru-calm-barrier-serum-desktop.png | 1916×821 | EXISTS / WEB 연결 완료 |
 | mobile | assets/images/projects/moru/campaign/moru-calm-barrier-serum-mobile.png | 1122×1402 | EXISTS / WEB 연결 완료 |
-| social-01 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-01.png | 1672×941 | EXISTS / WEB 연결 완료 |
-| social-02 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-02.png | 1254×1254 | EXISTS / WEB 연결 완료 |
-| social-03 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-03.png | 1254×1254 | EXISTS / WEB 연결 완료 |
+| social-01 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-01.png | 1672×941 | EXISTS / 기본 화면 제외 |
+| social-02 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-02.png | 1254×1254 | EXISTS / 기본 화면 제외 |
+| social-03 | assets/images/projects/moru/campaign/moru-calm-barrier-serum-social-03.png | 1254×1254 | EXISTS / 기본 화면 제외 |
 | story | assets/images/projects/moru/campaign/moru-calm-barrier-serum-story.png | 941×1672 | EXISTS / WEB 연결 완료 |
 
 모든 경로는 요청한 파일명과 같습니다. 예상 제작 규격 대신 실제 dimensions를 사용합니다.
@@ -44,9 +44,9 @@ Social 01은 가로형, 02/03은 정사각형입니다. grid의 높이를 강제
 ## Web Architecture
 06 MORU: Reconstruction label → 제품명·metadata → 큰 Product Master →
 짧은 카피·Concept 고지·경력 연결 → Product Hero → 3개 Message → Content Flow.
-07 Commercial Case: FROM PRODUCT TO CONTENT. → Detail → Desktop → Mobile → Social 01–03 → Story.
-실제 결과물 9개를 표시하며 기존 개발 상태 문구와 hidden placeholder를 제거했습니다.
-Detail은 중앙 정렬·최대 1000px, Mobile/Story는 최대 760px, Social은 desktop 3열 / mobile 1열입니다.
+08 Commercial Case: FROM PRODUCT TO CONTENT. → Detail → Desktop → Mobile → Story.
+실제 결과물 6개를 표시합니다. Social 01–03 원본은 삭제하지 않고 기본 화면에서만 제외했습니다.
+Detail은 중앙 정렬, Mobile/Story는 한 쌍으로 구성해 원본 비율을 유지합니다.
 12개 navigation 번호·ID를 유지하며 06 label은 MORU입니다.
 
 ## Visual Direction / Quality
