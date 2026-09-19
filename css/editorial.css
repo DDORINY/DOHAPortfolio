@@ -20,8 +20,10 @@
 .period,.item-number{font-size:.75rem;color:var(--accent)}
 .experience-grid h3{font-size:clamp(1.1rem,2vw,1.8rem);line-height:1.2;margin:1rem 0}
 .role{color:var(--muted);font-size:.85rem}
+.experience-stage{margin-top:1.25rem;font-size:.72rem;font-weight:800;letter-spacing:.14em;color:var(--accent)}
 ul{list-style:none;margin:1.3rem 0 0;padding:0;line-height:1.9}
 .closing-note{margin-top:3rem;font-size:clamp(1.2rem,2.2vw,2rem);line-height:1.5;letter-spacing:-.04em}
+.closing-note>p:first-child{margin-bottom:.75rem;font-size:.72rem;font-weight:800;letter-spacing:.12em;color:var(--accent)}
 .project-status{font-size:.8rem;color:var(--accent);margin-top:2rem;display:flex;align-items:center;gap:.6rem}
 .project-status::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:currentColor}
 .editorial-list{margin:3rem 0 0 25%}

@@ -31,6 +31,9 @@
  .facts dt{font-size:1.2rem}
  .facts dd{font-size:.75rem}
  .experience-grid,.iteration-grid{grid-template-columns:1fr;gap:2.5rem}
+ #experience .experience-grid{gap:1.75rem}
+ #experience .closing-note{margin-top:2rem;font-size:1.05rem;line-height:1.45}
+ #experience .closing-note>p:first-child{margin-bottom:.6rem;font-size:.68rem;line-height:1.5}
  .toolkit-grid{grid-template-columns:repeat(2,1fr)}
  .process-list{margin-left:0}
  .editorial-list li{grid-template-columns:1.5rem 1fr;gap:.5rem}
